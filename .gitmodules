@@ -1,0 +1,3 @@
+[submodule "Assets/Soraphis"]
+	path = Assets/Soraphis
+	url = git@bitbucket.org:soraphis/unityextensions.git
