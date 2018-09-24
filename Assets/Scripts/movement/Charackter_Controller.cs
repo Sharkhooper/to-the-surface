@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Charackter_Controller : MonoBehaviour
 {
@@ -22,11 +23,15 @@ public class Charackter_Controller : MonoBehaviour
 		Left
 	}
 
+	public Tilemap tilemapVar;
+	
+	private PlayerHead headPos=PlayerHead.Up;
+	
 	[SerializeField] private BlockType blockRight;
 	
 	public InputProviderPlayer InputProvider;
 
-	private GameObject nextBlock;
+	private TileBase nextTileOn,nextTileIn;
 
 	
 
@@ -50,15 +55,22 @@ public class Charackter_Controller : MonoBehaviour
 
 
 
-		if (isHorizontal == true)
+		if (isHorizontal())
 		{
 
 
-			nextBlock= checkNextBlock(Vector2.right *movement.x);
+			nextTileOn= GetNextTileOn(Vector3Int.right *movement.x);
+			nextTile = CheckNextTile(Vector2.right* movement.x);
+			
+			
+
+
 		}
 		else
 		{
-			nextBlock= checkNextBlock(Vector2.up *movement.y);
+			nextBlock= CheckNextBlock(Vector2.up *movement.y);
+			nextTile = CheckNextTile()
+			
 		}
 
 
@@ -95,36 +107,60 @@ public class Charackter_Controller : MonoBehaviour
 		isMoving = false;
 	}
 
-	private void MovePlayerCube(){
-
-		if (isHorizontal() == true)
-		{
-
-			transform.Translate(x, 0);
-
-		}
-		else
-		{
-			transform.Translate(0, y);
-		}
-
-	}
+	
 
 
 
-	private GameObject checkNextBlock(Vector2 direction)
+	private TileBase GetNextTileOn(Vector3Int direction)
 	{
 		
-		
-		
-		
-		
-		
-		
-		
-		
+		Vector3Int tilePos = Vector3Int.RoundToInt(transform.position + direction);
+
+
+		switch (headPos)
+		{
+			
+			case PlayerHead.Up:
+				tilePos -= Vector3Int.up;
+				break;
+			case PlayerHead.Down:
+				tilePos+=Vector3Int.up ;
+				break;
+			case PlayerHead.Left:
+				tilePos += Vector3Int.right;
+				break;
+			case PlayerHead.Right:
+				tilePos -= Vector3Int.right;
+				break;
+			default:
+				print("Headpos error");
+				break;
+			
+			
+		}
+
+		return tilemapVar.GetTile(tilePos));
+
+
+
 	}
+
+	private TileBase GetNextTileIn(Vector3Int direction)
+	{
+
+		Vector3Int tilePos = Vector3Int.RoundToInt( transform.position + direction);
+
+
+		return tilemapVar.GetTile(tilePos);
+	}
+
+
 	
-	
+	private bool isHorizontal()
+	{
+
+		return (headPos == PlayerHead.Up || headPos == PlayerHead.Down);
+	}
+
 }
 
