@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using RoboRyanTron.Unite2017.Variables;
 using UnityEngine;
 
 public class Charackter_Controller : MonoBehaviour
@@ -8,29 +7,33 @@ public class Charackter_Controller : MonoBehaviour
 
 	private bool isMoving;
 
-	public void MovePlayer()
-	{if (isHorizontal == true)
-		{
-
-
-			transform.Translate(x, 0);
-		}
-
-
-
-
-		if (isHorizontal == false)
-		{
-
-
-			transform.Translate(0, y);
-		}
+	private enum BlockType
+	{
+		Block,
+		Convex,
+		Concave
 	}
+
+	private enum PlayerHead
+	{
+		Up,
+		Right,
+		Down,
+		Left
+	}
+
+	[SerializeField] private BlockType blockRight;
+	
+	public InputProviderPlayer InputProvider;
+
+	private GameObject nextBlock;
+
+	
 
 
 	// Use this for initialization
 	void Start () {
-		
+		InputProvider = GetComponent<InputProviderPlayer>();
 	}
 	
 	// Update is called once per frame
@@ -38,9 +41,25 @@ public class Charackter_Controller : MonoBehaviour
 	{
 		if (isMoving) return;
 		
-		var x = Input.GetAxis("Horizontal");
-		var y = Input.GetAxis("Vertical");
+		StartCoroutine(Wait());
+		
+		Vector2 movement = InputProvider.MoveDirection;
 
+		var x = movement.x;
+		var y = movement.y;
+
+
+
+		if (isHorizontal == true)
+		{
+
+
+			nextBlock= checkNextBlock(Vector2.right *movement.x);
+		}
+		else
+		{
+			nextBlock= checkNextBlock(Vector2.up *movement.y);
+		}
 
 
 		if (nextIsSomething() == true)
@@ -48,9 +67,16 @@ public class Charackter_Controller : MonoBehaviour
 
 			if (nextIsACube() == true)
 			{
+				MovePlayerCube();
 				
 				
-				
+			}
+			else
+			{
+				if(nextIsKonkanv()==true)
+					MovePlayerconcav();
+				else
+					MovePlayerconvex();
 			}
 
 		}
@@ -61,4 +87,44 @@ public class Charackter_Controller : MonoBehaviour
 
 
 	}
+
+	private IEnumerator Wait()
+	{
+		isMoving = true;
+		yield return new WaitForSeconds(5.0f);
+		isMoving = false;
+	}
+
+	private void MovePlayerCube(){
+
+		if (isHorizontal() == true)
+		{
+
+			transform.Translate(x, 0);
+
+		}
+		else
+		{
+			transform.Translate(0, y);
+		}
+
+	}
+
+
+
+	private GameObject checkNextBlock(Vector2 direction)
+	{
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	
 }
+
