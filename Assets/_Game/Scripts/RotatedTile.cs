@@ -1,12 +1,37 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Tilemaps;
 #if UNITY_EDITOR
 using UnityEditor;
 
 #endif
+
+public enum OnWalkOverAction {
+	Invalid,
+	MoveToCenter,
+	MoveConvex
+}
+
+public enum OnEnterAction {
+	Invalid,
+	MoveConcaveLeft,
+	MoveConcaveRight,
+}
+
+public enum OnLandAction {
+	None,
+	MoveConcaveLeft,
+	MoveConcaveRight,
+	MoveConvexLeft,
+	MoveConvexRight,
+}
+
+[System.Serializable]
+public struct MovementAction {
+	[SerializeField] public OnWalkOverAction left;
+	[SerializeField] public OnWalkOverAction right;
+	[SerializeField] public OnEnterAction enter;
+	[SerializeField] public OnLandAction land;
+}
 
 public class RotatedTile : TileBase {
 	private enum Rotation {
@@ -18,13 +43,22 @@ public class RotatedTile : TileBase {
 
 	[SerializeField] private Sprite sprite;
 	[SerializeField] private Rotation rotation;
+	[SerializeField] private MovementAction top;
+	[SerializeField] private MovementAction left;
+	[SerializeField] private MovementAction right;
+	[SerializeField] private MovementAction bottom;
+
+	public MovementAction Top => top;
+
+	public MovementAction Left => left;
+
+	public MovementAction Right => right;
+
+	public MovementAction Bottom => bottom;
 
 	public override void GetTileData(Vector3Int position, ITilemap tilemap, ref TileData tileData) {
 		tileData.sprite = sprite;
 		tileData.color = Color.white;
-		float degrees;
-		switch (rotation) { }
-
 		tileData.transform = Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0, 0, GetDegrees()), Vector3.one);
 		tileData.flags = TileFlags.LockTransform;
 		tileData.colliderType = Tile.ColliderType.Grid;
