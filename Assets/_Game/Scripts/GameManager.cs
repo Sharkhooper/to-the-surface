@@ -24,7 +24,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 		}
 		set { highestLevel = value; }
 	}
-	private int lastLevel = SceneManager.sceneCountInBuildSettings-2;		//Die Anzahl aller exestierenden Level (Maximale ANzahl Level im Speil)
+	private int lastLevel;		//Die Anzahl aller exestierenden Level (Maximale ANzahl Level im Speil)
 
 
 	public GameObject PauseMenuPrefab;		// Daraus wird das PauseMenu erstellt (Hilfestellung)
@@ -37,6 +37,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 		
 		SceneManager.LoadScene("MainMenu",LoadSceneMode.Single);		// beim starten das SPiels wird das Mainmenu geöffnet
 		highestLevel = 1;
+		lastLevel = SceneManager.sceneCountInBuildSettings-2;
 	}
 	
 		//	Update nicht benötigt da alle veränderungen über Methodenaufrufe laufen
