@@ -141,7 +141,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 	{
 		Destroy(PauseMenu);			// Da im hauptmenu kein PauseMenu gebraucht wird wird es zerstört und wieder erstellt wenn man ein lvl startet
 		
-		SceneManager.LoadScene("MainMenu",LoadSceneMode.Single);
+		SceneManager.LoadScene("MainMenu",LoadSceneMode.Single);		// aufruf des Mainmenu
 		
 		
 		
