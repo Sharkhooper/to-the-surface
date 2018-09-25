@@ -24,7 +24,6 @@ public class GameManager : SingletonBehaviour<GameManager>
 	private int lastLevel;		//Die Anzahl aller exestierenden Level (Maximale ANzahl Level im Speil)
 
 
-	public GameObject PauseMenuPrefab;		// Daraus wird das PauseMenu erstellt (Hilfestellung)
 	public GameObject PauseMenu =null ;		//Damit wird das PauseMenu gespeichert
 	
 
@@ -68,12 +67,13 @@ public class GameManager : SingletonBehaviour<GameManager>
 		}
 
 
-		if (PauseMenu==null)				// erstellt das PauseMenu wenn es noch keines gibt
-		{
-			PauseMenuPrefab= Resources.Load<GameObject>("Assets/Prefabs/PauseMenu.prefab");
+		//if (PauseMenu==null)				// erstellt das PauseMenu wenn es noch keines gibt
+		//{
+		//	PauseMenuPrefab= Resources.Load<GameObject>("Assets/Prefabs/PauseMenu.prefab");
 
-			PauseMenu = Instantiate(PauseMenuPrefab);
-		}
+			//PauseMenu = GameObject.FindWithTag("PauseMenu");
+				//Instantiate(PauseMenuPrefab);
+		//}
 
 		PauseMenu.SetActive(false);			// macht PAuse menu inaktiv um es nicht über dem Spiel zu haben
 
@@ -124,6 +124,10 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 	public void PauseLevel()		// pausiert das lvl indem das Gameobject PauseMenu aktiv wird
 	{
+		
+		
+		
+		
 		Time.timeScale = 0.0f;
 		PauseMenu.SetActive(true);
 		
