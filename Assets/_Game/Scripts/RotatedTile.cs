@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Tilemaps;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -23,6 +24,13 @@ public enum OnLandAction {
 	MoveConcaveRight,
 	MoveConvexLeft,
 	MoveConvexRight,
+}
+
+public enum Orientation {
+	Up = 0,
+	Right = 1,
+	Down = 2,
+	Left = 3
 }
 
 [System.Serializable]
@@ -55,6 +63,19 @@ public class RotatedTile : TileBase {
 	public MovementAction Right => right;
 
 	public MovementAction Bottom => bottom;
+
+	public MovementAction this[Orientation orientation] {
+		get {
+			switch (orientation) {
+				case Orientation.Up: return Top;
+				case Orientation.Right: return Right;
+				case Orientation.Down: return Bottom;
+				case Orientation.Left: return Left;
+				default:
+					throw new ArgumentOutOfRangeException(nameof(orientation), orientation, null);
+			}
+		}
+	}
 
 	public override void GetTileData(Vector3Int position, ITilemap tilemap, ref TileData tileData) {
 		tileData.sprite = sprite;
