@@ -40,6 +40,14 @@ public class PlayerActor : MonoBehaviour {
 
 	[SerializeField] public InputProvider inputProvider;
 
+	private void Start() {
+		Cinemachine.CinemachineVirtualCamera cam = Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>();
+
+		if (cam != null) {
+			cam.Follow = trackingPoint.transform;
+		}
+	}
+
 	private void Update() {
 		if (isMoving) return;
 
