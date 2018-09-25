@@ -71,7 +71,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 		//{
 		//	PauseMenuPrefab= Resources.Load<GameObject>("Assets/Prefabs/PauseMenu.prefab");
 
-			//PauseMenu = GameObject.FindWithTag("PauseMenu");
+			// 						//PauseMenu = GameObject.FindWithTag("PauseMenu");
 				//Instantiate(PauseMenuPrefab);
 		//}
 
