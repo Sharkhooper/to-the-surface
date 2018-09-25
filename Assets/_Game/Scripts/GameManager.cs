@@ -26,7 +26,9 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 	public GameObject PauseMenuPrefab;		// Daraus wird das PauseMenu erstellt (Hilfestellung)
 	public GameObject PauseMenu =null ;		//Damit wird das PauseMenu gespeichert
+	
 
+	
 
 	//Awake is always called before any Start functions
 
@@ -74,6 +76,8 @@ public class GameManager : SingletonBehaviour<GameManager>
 		}
 
 		PauseMenu.SetActive(false);			// macht PAuse menu inaktiv um es nicht über dem Spiel zu haben
+
+
 		
 
 		SceneManager.LoadScene(load,LoadSceneMode.Single);
@@ -89,12 +93,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 	}
 
 
-	public void Credits()		// aufruf der Credits im hauptmenu
-	{
-		
-		SceneManager.LoadScene("Credits",LoadSceneMode.Single);
-		
-	}
+	
 
 
 	public void CloseGame()		// beendet das Spiel
@@ -138,10 +137,14 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 	}
 
-	public void CloseLevel()		// Das Lvl wird beendet und man geht ins Hauptmenu
+	public void GoMainMenu()		// Das Lvl wird beendet und man geht ins Hauptmenu
 	{
 		Destroy(PauseMenu);			// Da im hauptmenu kein PauseMenu gebraucht wird wird es zerstört und wieder erstellt wenn man ein lvl startet
+		
 		SceneManager.LoadScene("MainMenu",LoadSceneMode.Single);
+		
+		
+		
 		
 	}
 
@@ -152,12 +155,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 	}
 
-	public void ToLevelSelectScene()	// Man kommt in die Level auswahlscene/Bildschrim von der aus man bestimmte level wählen kann (zu loadLevel)
-	{
-		
-		SceneManager.LoadScene("LevelSelect",LoadSceneMode.Single);
-		
-	}
+	
 
 
 	
