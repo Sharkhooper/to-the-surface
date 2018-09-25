@@ -30,31 +30,35 @@ public class PlayerActor : MonoBehaviour {
 		return tmp < 0 ? tmp + m : tmp;
 	}
 
+	[SerializeField] private GameObject trackingPoint;
+
 	[SerializeField] private Tilemap tilemap;
 
 	[SerializeField] private Orientation orientation = Orientation.Up;
 
 	[SerializeField] private MovementDirection facing = MovementDirection.Right;
 
-	[SerializeField] public InputProviderPlayer InputProvider;
-
-	private void Start() {
-		InputProvider = GetComponent<InputProviderPlayer>();
-	}
+	[SerializeField] public IInputProvider inputProvider;
 
 	private void Update() {
 		if (isMoving) return;
 
 		transform.position = tilemap.GetCellCenterWorld(tilemap.WorldToCell(transform.position));
 
-		float direction = InputProvider.MoveDirection.x;
+		float direction = inputProvider.MoveDirection.x;
 
 		if (direction < 0) {
 			StartCoroutine(Move(MovementDirection.Left));
 		} else if (direction > 0) {
 			StartCoroutine(Move(MovementDirection.Right));
-		} else if (InputProvider.JumpPressed) {
+		} else if (inputProvider.JumpPressed) {
 			StartCoroutine(Jump());
+		}
+
+		if (inputProvider.PeekingPressed) {
+			trackingPoint.transform.localPosition = Vector3.up * 9;
+		} else {
+			trackingPoint.transform.localPosition = Vector3.zero;
 		}
 	}
 
@@ -214,15 +218,6 @@ public class PlayerActor : MonoBehaviour {
 		}
 
 		isMoving = false;
-	}
-
-	private RotatedTile Raycast(Vector3Int cellPosition, Vector3Int diretion) {
-		for (int i = 0; i < MAX_STEPS; ++i) {
-			RotatedTile tile = tilemap.GetTile<RotatedTile>(cellPosition + diretion * i);
-			if (tile != null) return tile;
-		}
-
-		return null;
 	}
 
 	private IEnumerator Jump() {
