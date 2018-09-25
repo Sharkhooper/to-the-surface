@@ -612,7 +612,7 @@ MonoBehaviour:
   tilemap: {fileID: 185498795}
   orientation: 0
   facing: 1
-  InputProvider: {fileID: 11400000, guid: 026a5a3d17da2ec4b878bae9363baa61, type: 2}
+  inputProvider: {fileID: 11400000, guid: 70f7d7f3479adef4db8d8c8e4ac5a91c, type: 2}
 --- !u!212 &427587215
 SpriteRenderer:
   m_ObjectHideFlags: 0

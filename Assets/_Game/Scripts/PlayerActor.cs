@@ -38,7 +38,7 @@ public class PlayerActor : MonoBehaviour {
 
 	[SerializeField] private MovementDirection facing = MovementDirection.Right;
 
-	[SerializeField] public IInputProvider inputProvider;
+	[SerializeField] public InputProvider inputProvider;
 
 	private void Update() {
 		if (isMoving) return;
