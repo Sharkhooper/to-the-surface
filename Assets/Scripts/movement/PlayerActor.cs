@@ -34,6 +34,8 @@ public class PlayerActor : MonoBehaviour {
 
 	[SerializeField] private Orientation orientation = Orientation.Up;
 
+	[SerializeField] private MovementDirection facing = MovementDirection.Right;
+
 	[SerializeField] public InputProviderPlayer InputProvider;
 
 	private void Start() {
@@ -57,7 +59,14 @@ public class PlayerActor : MonoBehaviour {
 	}
 
 	private void UpdateOrientation() {
-		transform.rotation = Quaternion.Euler(0, 0, (int)orientation * -90.0f);
+		Vector3 euler = new Vector3(0, 0, (int) orientation * -90.0f);
+		if (orientation == Orientation.Left || orientation == Orientation.Right) {
+			euler.x = facing == MovementDirection.Right ? 0 : 180.0f;
+		} else if (orientation == Orientation.Up || orientation == Orientation.Down) {
+			euler.y = facing == MovementDirection.Right ? 0 : 180.0f;
+		}
+
+		transform.rotation = Quaternion.Euler(euler);
 	}
 
 	private Vector3Int GetDirectionVector(Orientation o) {
@@ -93,7 +102,6 @@ public class PlayerActor : MonoBehaviour {
 			Vector3Int downVec = GetDirectionVector((Orientation) Mod((int) o + 2, 4));
 
 			Orientation enterFace = (Orientation) Mod((int) o - (int) direction, 4);
-			Debug.Log(enterFace);
 
 			Vector3Int adjacentCellPos = celllPos + directionVec;
 			Vector3Int adjacentDownCellPos = adjacentCellPos + downVec;
@@ -196,6 +204,7 @@ public class PlayerActor : MonoBehaviour {
 		}
 
 		if (isValidRoute) {
+			facing = direction;
 			foreach (RouteSnapshot v in route) {
 				transform.position = v.position;
 				orientation = v.orientation;
