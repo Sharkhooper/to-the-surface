@@ -13,3 +13,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: b71d3df6a1ca4a44bad4d0877bc53e0e, type: 3}
   rotation: 0
+  top:
+    left: 1
+    right: 1
+    enter: 0
+    land: 0
+  left:
+    left: 1
+    right: 1
+    enter: 0
+    land: 0
+  right:
+    left: 1
+    right: 1
+    enter: 0
+    land: 0
+  bottom:
+    left: 1
+    right: 1
+    enter: 0
+    land: 0
