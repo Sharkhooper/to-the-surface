@@ -10,19 +10,16 @@ using UnityEngine.SceneManagement;
 
 
 
+
 public class GameManager : SingletonBehaviour<GameManager>
 {
-
-	public static GameManager
-		instance = null; //Static instance of GameManager which allows it to be accessed by any other script.
-
 	//private BoardManager boardScript;                       //Store a reference to our BoardManager which will set up the level.
 	private int currentLevel = 1; //Current level number, expressed in game as "Day 1".
 	private int highestLevel 	// Das höchste freigespielte Level
 	{get{
 			return highestLevel;
 		}
-		set { highestLevel = value; }
+		set { }
 	}
 	private int lastLevel;		//Die Anzahl aller exestierenden Level (Maximale ANzahl Level im Speil)
 
@@ -30,14 +27,25 @@ public class GameManager : SingletonBehaviour<GameManager>
 	public GameObject PauseMenuPrefab;		// Daraus wird das PauseMenu erstellt (Hilfestellung)
 	public GameObject PauseMenu =null ;		//Damit wird das PauseMenu gespeichert
 
+
 	//Awake is always called before any Start functions
 
 	private void Awake()
 	{
+	
 		
-		SceneManager.LoadScene("MainMenu",LoadSceneMode.Single);		// beim starten das SPiels wird das Mainmenu geöffnet
+		
+		
+		Debug.Log("MainMenu geladen");
+		
 		highestLevel = 1;
+		
+		Debug.Log("highestLevel=1");
+		
 		lastLevel = SceneManager.sceneCountInBuildSettings-2;
+		
+		Debug.Log("LastLevel= Scenemaganger.Scenecount etc");
+		
 	}
 	
 		//	Update nicht benötigt da alle veränderungen über Methodenaufrufe laufen
