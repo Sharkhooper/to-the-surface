@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Soraphis;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Experimental.PlayerLoop;
 using UnityEngine.SceneManagement;
 
 
@@ -17,22 +18,32 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 	//private BoardManager boardScript;                       //Store a reference to our BoardManager which will set up the level.
 	private int currentLevel = 1; //Current level number, expressed in game as "Day 1".
-	private int highestLevel = 1;
-	private int lastLevel = SceneManager.sceneCountInBuildSettings-2;
+	private int highestLevel 	// Das höchste freigespielte Level
+	{get{
+			return highestLevel;
+		}
+		set { highestLevel = value; }
+	}
+	private int lastLevel = SceneManager.sceneCountInBuildSettings-2;		//Die Anzahl aller exestierenden Level (Maximale ANzahl Level im Speil)
 
 
-	public GameObject PauseMenuPrefab;
-	public GameObject PauseMenu =null ;
+	public GameObject PauseMenuPrefab;		// Daraus wird das PauseMenu erstellt (Hilfestellung)
+	public GameObject PauseMenu =null ;		//Damit wird das PauseMenu gespeichert
 
 	//Awake is always called before any Start functions
+
+	private void Awake()
+	{
+		
+		SceneManager.LoadScene("MainMenu",LoadSceneMode.Single);		// beim starten das SPiels wird das Mainmenu geöffnet
+		highestLevel = 1;
+	}
+	
+		//	Update nicht benötigt da alle veränderungen über Methodenaufrufe laufen
+
+
 	
 	
-
-
-
-
-
-
 	public void LoadLevel(int lvl)			//lädt das ausgewählte lvl abhängig seiner Nummer
 	{
 
@@ -140,4 +151,6 @@ public class GameManager : SingletonBehaviour<GameManager>
 	}
 
 
+	
+	
 }
