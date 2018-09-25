@@ -34,6 +34,8 @@ public class PlayerActor : MonoBehaviour {
 
 	[SerializeField] private Orientation orientation = Orientation.Up;
 
+	[SerializeField] private MovementDirection facing = MovementDirection.Right;
+
 	[SerializeField] public InputProviderPlayer InputProvider;
 
 	private void Start() {
@@ -51,7 +53,20 @@ public class PlayerActor : MonoBehaviour {
 			StartCoroutine(Move(MovementDirection.Left));
 		} else if (direction > 0) {
 			StartCoroutine(Move(MovementDirection.Right));
+		} else if (InputProvider.JumpPressed) {
+			StartCoroutine(Jump());
 		}
+	}
+
+	private void UpdateOrientation() {
+		Vector3 euler = new Vector3(0, 0, (int) orientation * -90.0f);
+		if (orientation == Orientation.Left || orientation == Orientation.Right) {
+			euler.x = facing == MovementDirection.Right ? 0 : 180.0f;
+		} else if (orientation == Orientation.Up || orientation == Orientation.Down) {
+			euler.y = facing == MovementDirection.Right ? 0 : 180.0f;
+		}
+
+		transform.rotation = Quaternion.Euler(euler);
 	}
 
 	private Vector3Int GetDirectionVector(Orientation o) {
@@ -87,7 +102,6 @@ public class PlayerActor : MonoBehaviour {
 			Vector3Int downVec = GetDirectionVector((Orientation) Mod((int) o + 2, 4));
 
 			Orientation enterFace = (Orientation) Mod((int) o - (int) direction, 4);
-			Debug.Log(enterFace);
 
 			Vector3Int adjacentCellPos = celllPos + directionVec;
 			Vector3Int adjacentDownCellPos = adjacentCellPos + downVec;
@@ -190,11 +204,87 @@ public class PlayerActor : MonoBehaviour {
 		}
 
 		if (isValidRoute) {
+			facing = direction;
 			foreach (RouteSnapshot v in route) {
 				transform.position = v.position;
-				transform.rotation = Quaternion.Euler(0, 0, (int)v.orientation * -90.0f);
 				orientation = v.orientation;
+				UpdateOrientation();
 				yield return new WaitForSeconds(0.25f);
+			}
+		}
+
+		isMoving = false;
+	}
+
+	private RotatedTile Raycast(Vector3Int cellPosition, Vector3Int diretion) {
+		for (int i = 0; i < MAX_STEPS; ++i) {
+			RotatedTile tile = tilemap.GetTile<RotatedTile>(cellPosition + diretion * i);
+			if (tile != null) return tile;
+		}
+
+		return null;
+	}
+
+	private IEnumerator Jump() {
+		isMoving = true;
+		Vector3Int celllPos = tilemap.WorldToCell(transform.position);
+		Vector3Int direction = GetDirectionVector(orientation);
+		RotatedTile tile = null;
+		for (int i = 0; i < MAX_STEPS; ++i) {
+			celllPos += direction;
+			RotatedTile hit = tilemap.GetTile<RotatedTile>(celllPos);
+			if (hit != null) {
+				tile = hit;
+				break;
+			}
+		}
+
+		if (tile != null) {
+			Debug.DrawLine(tilemap.GetCellCenterWorld(tilemap.WorldToCell(transform.position)), tilemap.GetCellCenterWorld(celllPos), Color.red);
+			OnLandAction action = tile[(Orientation) Mod((int) orientation + 2, 4)].land;
+
+			yield return new WaitForSeconds(0.25f);
+			switch (action) {
+				case OnLandAction.None:
+					transform.position = celllPos - direction;
+					orientation = (Orientation)Mod((int)orientation + 2, 4);
+					UpdateOrientation();
+					break;
+
+				case OnLandAction.MoveConcaveLeft:
+					transform.position = celllPos;
+					orientation = (Orientation)Mod((int)orientation + 2, 4);
+					UpdateOrientation();
+					yield return new WaitForSeconds(0.25f);
+					yield return Move(MovementDirection.Left);
+					break;
+
+				case OnLandAction.MoveConcaveRight:
+					transform.position = celllPos;
+					orientation = (Orientation)Mod((int)orientation + 2, 4);
+					UpdateOrientation();
+					yield return new WaitForSeconds(0.25f);
+					yield return Move(MovementDirection.Right);
+					break;
+
+				case OnLandAction.MoveConvexLeft:
+					transform.position = celllPos + GetDirectionVector((Orientation)Mod((int)orientation + 1, 4));
+					orientation = (Orientation) Mod((int) orientation + 1, 4);
+					UpdateOrientation();
+					yield return new WaitForSeconds(0.25f);
+					yield return Move(MovementDirection.Left);
+					break;
+
+				case OnLandAction.MoveConvexRight:
+					transform.position = celllPos + GetDirectionVector((Orientation)Mod((int)orientation - 1, 4));
+					orientation = (Orientation)Mod((int)orientation - 1, 4);
+					UpdateOrientation();
+					yield return new WaitForSeconds(0.25f);
+					yield return Move(MovementDirection.Right);
+					break;
+
+				default:
+					throw new ArgumentOutOfRangeException();
 			}
 		}
 
