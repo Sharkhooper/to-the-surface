@@ -144,7 +144,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilemap: {fileID: 185498795}
   orientation: 0
-  blockRight: 0
   InputProvider: {fileID: 1335452}
 --- !u!212 &1335450
 SpriteRenderer:
