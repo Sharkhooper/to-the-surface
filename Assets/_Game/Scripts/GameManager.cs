@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Soraphis;
 using UnityEditor;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.Experimental.PlayerLoop;
 using UnityEngine.SceneManagement;
@@ -66,10 +67,9 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 		if (PauseMenu==null)				// erstellt das PauseMenu wenn es noch keines gibt
 		{
-			PauseMenu=Instantiate(Resources.Load<GameObject>("PauseMenu.prefab"));
-
 			
-			
+			PauseMenu=Instantiate(Resources.Load("PauseMenu",typeof(GameObject)))as GameObject;
+	
 		}
 
 		PauseMenu.SetActive(false);			// macht PAuse menu inaktiv um es nicht über dem Spiel zu haben
@@ -123,10 +123,25 @@ public class GameManager : SingletonBehaviour<GameManager>
 	{
 		
 		
+		if (PauseMenu==null)				// erstellt das PauseMenu wenn es noch keines gibt
+		{
+			
+			PauseMenu=Instantiate(Resources.Load("PauseMenu",typeof(GameObject)))as GameObject;
+	
+		}
+
+		
+		
+		
+		
+		
+		
 		
 		
 		Time.timeScale = 0.0f;
 		PauseMenu.SetActive(true);
+		
+		
 		
 	}
 
@@ -140,7 +155,14 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 	public void GoMainMenu()		// Das Lvl wird beendet und man geht ins Hauptmenu
 	{
+		
+		
+		
 		Destroy(PauseMenu);			// Da im hauptmenu kein PauseMenu gebraucht wird wird es zerstört und wieder erstellt wenn man ein lvl startet
+		PauseMenu = null;
+		
+		
+		
 		
 		SceneManager.LoadScene("MainMenu",LoadSceneMode.Single);		// aufruf des Mainmenu
 		
