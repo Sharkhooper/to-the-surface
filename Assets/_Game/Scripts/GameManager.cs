@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Soraphis;
 using UnityEditor;
-using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.Experimental.PlayerLoop;
 using UnityEngine.SceneManagement;
@@ -21,7 +20,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 
 	private GameObject PauseMenu =null ;		//Damit wird das PauseMenu gespeichert
-	private bool inLevel = false;
+	public bool inLevel = false;
 	
 
 	private LoadSave ls = new LoadSave();
@@ -36,7 +35,6 @@ public class GameManager : SingletonBehaviour<GameManager>
 		lastLevel = SceneManager.sceneCountInBuildSettings-2;
 
 
-
 		if (ls.DoesSaveFileExist())
 		{
 			int tmp = 1;
@@ -48,29 +46,35 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 	}
 
-	private void Update()
+	void Update()
 	{
+		/*
 		if (inLevel)
 		{
-			if (Input.GetKey("escape"))
+			Debug.Log("In Level");
+			if (Input.GetKeyDown(KeyCode.Escape))
 			{
+				Debug.Log("Escape");
 				if( !(PauseMenu.activeSelf))
-				PauseLevel();
+				{
+					PauseLevel();
+				}
 				else
 				{
 					ContinueLevel();
 				}
-				
-				
 			}
-			
+			Debug.Log("InLevel= " + inLevel);
 		}
+		*/
 	}
 
 	//	Update nicht benötigt da alle veränderungen über Methodenaufrufe laufen
 
-
-	
+	public bool PauseMenuActive()
+	{
+		
+	}
 	
 	public void LoadLevel(int lvl)			//lädt das ausgewählte lvl abhängig seiner Nummer
 	{
@@ -83,19 +87,6 @@ public class GameManager : SingletonBehaviour<GameManager>
 		{
 			load = "Level" + lvl;
 		}
-
-
-		if (PauseMenu==null)				// erstellt das PauseMenu wenn es noch keines gibt
-		{
-			
-			PauseMenu=Instantiate(Resources.Load("PauseMenu",typeof(GameObject)))as GameObject;
-	
-		}
-
-		PauseMenu.SetActive(false);			// macht PAuse menu inaktiv um es nicht über dem Spiel zu haben
-
-
-
 
 		inLevel = true;
 		SceneManager.LoadScene(load,LoadSceneMode.Single);
@@ -145,15 +136,10 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 	public void PauseLevel()		// pausiert das lvl indem das Gameobject PauseMenu aktiv wird
 	{
-		
-		
 		if (PauseMenu==null)				// erstellt das PauseMenu wenn es noch keines gibt
 		{
-			
 			PauseMenu=Instantiate(Resources.Load("PauseMenu",typeof(GameObject)))as GameObject;
-	
 		}
-
 		
 		Time.timeScale = 0.0f;
 		PauseMenu.SetActive(true);
@@ -164,7 +150,6 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 	public void ContinueLevel()		// weiter button im PauseMenu ; Pause Menu wird inaktiv
 	{
-
 		Time.timeScale = 1.0f;
 		PauseMenu.SetActive(false);
 
