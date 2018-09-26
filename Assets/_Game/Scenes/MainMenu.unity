@@ -10672,7 +10672,7 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1284376702}
     - target: {fileID: 114239850295400252, guid: 28691e34a255994418a523676d503274,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -10692,7 +10692,7 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1284376702}
     - target: {fileID: 1003090352860126, guid: 28691e34a255994418a523676d503274, type: 2}
       propertyPath: m_IsActive
       value: 1
@@ -10751,6 +10751,16 @@ Prefab:
         type: 2}
       propertyPath: m_isInputParsingRequired
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114649729087557186, guid: 28691e34a255994418a523676d503274,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Play
+      objectReference: {fileID: 0}
+    - target: {fileID: 114814784259963796, guid: 28691e34a255994418a523676d503274,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Exit
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28691e34a255994418a523676d503274, type: 2}

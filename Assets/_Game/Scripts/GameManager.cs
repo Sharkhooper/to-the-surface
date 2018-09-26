@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Soraphis;
 using UnityEditor;
@@ -70,11 +71,6 @@ public class GameManager : SingletonBehaviour<GameManager>
 	}
 
 	//	Update nicht benötigt da alle veränderungen über Methodenaufrufe laufen
-
-	public bool PauseMenuActive()
-	{
-		
-	}
 	
 	public void LoadLevel(int lvl)			//lädt das ausgewählte lvl abhängig seiner Nummer
 	{
@@ -91,24 +87,17 @@ public class GameManager : SingletonBehaviour<GameManager>
 		inLevel = true;
 		SceneManager.LoadScene(load,LoadSceneMode.Single);
 		
-		
+		Time.timeScale = 1.0f;
 	}
 
 	public void ContinueGame() //Continue im Hauptmenu
 	{
-
 		LoadLevel(currentLevel);
-
 	}
-
-
 	
-
-
 	public void CloseGame()		// beendet das Spiel
 	{
 		Application.Quit();
-		
 	}
 
 
@@ -124,14 +113,11 @@ public class GameManager : SingletonBehaviour<GameManager>
 		ls.Safe(currentLevel,tmp);
 		
 		LoadLevel(currentLevel);
-
 	}
-
 
 	public void ResetLevel()		// Neustarte bzw. neu lade das Leven/ die scene
 	{
 		LoadLevel(currentLevel);
-		
 	}
 
 	public void PauseLevel()		// pausiert das lvl indem das Gameobject PauseMenu aktiv wird
@@ -143,34 +129,33 @@ public class GameManager : SingletonBehaviour<GameManager>
 		
 		Time.timeScale = 0.0f;
 		PauseMenu.SetActive(true);
-		
-		
-		
+	}
+
+	public bool PauseMenuActive()
+	{
+		if (PauseMenu != null)
+		{
+			return PauseMenu.activeSelf;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	public void ContinueLevel()		// weiter button im PauseMenu ; Pause Menu wird inaktiv
 	{
 		Time.timeScale = 1.0f;
 		PauseMenu.SetActive(false);
-
 	}
 
 	public void GoMainMenu()		// Das Lvl wird beendet und man geht ins Hauptmenu
 	{
-		
-		
-		
 		Destroy(PauseMenu);			// Da im hauptmenu kein PauseMenu gebraucht wird wird es zerstört und wieder erstellt wenn man ein lvl startet
 		PauseMenu = null;
 
-
-
 		inLevel = false;
 		SceneManager.LoadScene("MainMenu",LoadSceneMode.Single);		// aufruf des Mainmenu
-		
-		
-		
-		
 	}
 
 	public void ResetProgress()		// Man löscht seinen gesamten Fortschritt und hat wieder keine Lvl freigeschaltet
