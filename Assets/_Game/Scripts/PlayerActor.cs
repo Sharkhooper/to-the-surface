@@ -19,17 +19,6 @@ public class PlayerActor : MonoBehaviour {
 		public Orientation orientation;
 	}
 
-	/// <summary>
-	/// Custom Modulo that does not return negative values
-	/// </summary>
-	/// <param name="i">Input value</param>
-	/// <param name="m">Divisior</param>
-	/// <returns>i % m</returns>
-	private static int Mod(int i, int m) {
-		int tmp = i % m;
-		return tmp < 0 ? tmp + m : tmp;
-	}
-
 	[SerializeField] private GameObject trackingPoint;
 
 	[SerializeField] private Tilemap tilemap;
@@ -110,10 +99,11 @@ public class PlayerActor : MonoBehaviour {
 				break;
 			}
 
-			Vector3Int directionVec = GetDirectionVector((Orientation) Mod((int) o + (int) direction, 4));
-			Vector3Int downVec = GetDirectionVector((Orientation) Mod((int) o + 2, 4));
+			Orientation directionOrientation = o.RotateClockwise((int) direction);
+			Vector3Int directionVec = GetDirectionVector(directionOrientation);
+			Vector3Int downVec = GetDirectionVector(o.GetDown());
 
-			Orientation enterFace = (Orientation) Mod((int) o - (int) direction, 4);
+			Orientation enterFace = directionOrientation.GetDown();
 
 			Vector3Int adjacentCellPos = celllPos + directionVec;
 			Vector3Int adjacentDownCellPos = adjacentCellPos + downVec;
@@ -129,7 +119,7 @@ public class PlayerActor : MonoBehaviour {
 						if (adjacentTile[enterFace].enter == OnEnterAction.MoveConcaveRight) {
 							// TODO: Add animation
 							celllPos += directionVec;
-							o = (Orientation) Mod((int) o + 1, 4); // turn right
+							o = o.GetRight();
 						} else {
 							isValidRoute = false;
 						}
@@ -140,7 +130,7 @@ public class PlayerActor : MonoBehaviour {
 						if (adjacentTile[enterFace].enter == OnEnterAction.MoveConcaveLeft) {
 							// TODO: Add animation
 							celllPos += directionVec;
-							o = (Orientation) Mod((int) o - 1, 4); // turn left
+							o = o.GetLeft();
 						} else {
 							isValidRoute = false;
 						}
@@ -167,7 +157,7 @@ public class PlayerActor : MonoBehaviour {
 							case OnWalkOverAction.MoveConvex:
 								// TODO: Add animation
 								celllPos += directionVec + directionVec + downVec;
-								o = (Orientation) Mod((int) o - 1, 4); // turn left
+								o = o.GetLeft();
 								break;
 
 							default:
@@ -191,7 +181,7 @@ public class PlayerActor : MonoBehaviour {
 							case OnWalkOverAction.MoveConvex:
 								// TODO: Add animation
 								celllPos += directionVec + directionVec + downVec;
-								o = (Orientation) Mod((int) o + 1, 4); // turn right
+								o = o.GetRight();
 								break;
 
 							default:
@@ -244,19 +234,19 @@ public class PlayerActor : MonoBehaviour {
 
 		if (tile != null) {
 			Debug.DrawLine(tilemap.GetCellCenterWorld(tilemap.WorldToCell(transform.position)), tilemap.GetCellCenterWorld(celllPos), Color.red);
-			OnLandAction action = tile[(Orientation) Mod((int) orientation + 2, 4)].land;
+			OnLandAction action = tile[orientation.GetDown()].land;
 
 			yield return new WaitForSeconds(0.25f);
 			switch (action) {
 				case OnLandAction.None:
 					transform.position = celllPos - direction;
-					orientation = (Orientation)Mod((int)orientation + 2, 4);
+					orientation = orientation.GetDown();
 					UpdateOrientation();
 					break;
 
 				case OnLandAction.MoveConcaveLeft:
 					transform.position = celllPos;
-					orientation = (Orientation)Mod((int)orientation + 2, 4);
+					orientation = orientation.GetDown();
 					UpdateOrientation();
 					yield return new WaitForSeconds(0.25f);
 					yield return Move(MovementDirection.Left);
@@ -264,23 +254,23 @@ public class PlayerActor : MonoBehaviour {
 
 				case OnLandAction.MoveConcaveRight:
 					transform.position = celllPos;
-					orientation = (Orientation)Mod((int)orientation + 2, 4);
+					orientation = orientation.GetDown();
 					UpdateOrientation();
 					yield return new WaitForSeconds(0.25f);
 					yield return Move(MovementDirection.Right);
 					break;
 
 				case OnLandAction.MoveConvexLeft:
-					transform.position = celllPos + GetDirectionVector((Orientation)Mod((int)orientation + 1, 4));
-					orientation = (Orientation) Mod((int) orientation + 1, 4);
+					transform.position = celllPos + GetDirectionVector(orientation.GetRight());
+					orientation = orientation.GetRight();
 					UpdateOrientation();
 					yield return new WaitForSeconds(0.25f);
 					yield return Move(MovementDirection.Left);
 					break;
 
 				case OnLandAction.MoveConvexRight:
-					transform.position = celllPos + GetDirectionVector((Orientation)Mod((int)orientation - 1, 4));
-					orientation = (Orientation)Mod((int)orientation - 1, 4);
+					transform.position = celllPos + GetDirectionVector(orientation.GetLeft());
+					orientation = orientation.GetLeft();
 					UpdateOrientation();
 					yield return new WaitForSeconds(0.25f);
 					yield return Move(MovementDirection.Right);
