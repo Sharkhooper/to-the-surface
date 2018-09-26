@@ -16,12 +16,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 {
 	
 	private int currentLevel = 1; //Current level number, expressed in game as "Day 1".
-	private int highestLevel 	// Das höchste freigespielte Level
-	{get{
-			return highestLevel;
-		}
-		set { }
-	}
+	public int HighestLevel { get; private set; }
 	private int lastLevel;		//Die Anzahl aller exestierenden Level (Maximale ANzahl Level im Speil)
 
 
@@ -35,13 +30,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 	private void Awake()
 	{
-	
-		
-		
-		
-		
-		highestLevel = 1;
-		
+		HighestLevel = 1;
 		
 		lastLevel = SceneManager.sceneCountInBuildSettings-2;
 		
@@ -126,8 +115,8 @@ public class GameManager : SingletonBehaviour<GameManager>
 		if(currentLevel<lastLevel)
 		currentLevel++;
 
-		if (currentLevel > highestLevel)
-			highestLevel++;
+		if (currentLevel > HighestLevel)
+			HighestLevel++;
 		
 		LoadLevel(currentLevel);
 
@@ -188,7 +177,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 	public void ResetProgress()		// Man löscht seinen gesamten Fortschritt und hat wieder keine Lvl freigeschaltet
 	{
 		currentLevel = 1;
-		lastLevel = 1;
+		HighestLevel = 1;
 
 	}
 
