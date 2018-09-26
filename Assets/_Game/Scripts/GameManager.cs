@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Soraphis;
 using UnityEditor;
-using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.Experimental.PlayerLoop;
 using UnityEngine.SceneManagement;
@@ -21,7 +20,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 
 	private GameObject PauseMenu =null ;		//Damit wird das PauseMenu gespeichert
-	private bool inLevel = false;
+	public bool inLevel = false;
 	
 
 	private LoadSave ls = new LoadSave();
@@ -36,7 +35,6 @@ public class GameManager : SingletonBehaviour<GameManager>
 		lastLevel = SceneManager.sceneCountInBuildSettings-2;
 
 
-
 		if (ls.DoesSaveFileExist())
 		{
 			int tmp = 1;
@@ -48,29 +46,36 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 	}
 
-	private void Update()
+	void Update()
 	{
+		/*
 		if (inLevel)
 		{
-			if (Input.GetKey("escape"))
+			Debug.Log("In Level");
+			if (Input.GetKeyDown(KeyCode.Escape))
 			{
+				Debug.Log("Escape");
 				if( !(PauseMenu.activeSelf))
-				PauseLevel();
+				{
+					PauseLevel();
+				}
 				else
 				{
 					ContinueLevel();
 				}
-				
-				
 			}
-			
+			Debug.Log("InLevel= " + inLevel);
 		}
+		*/
 	}
 
 	//	Update nicht benötigt da alle veränderungen über Methodenaufrufe laufen
 
-
-	
+	public bool PauseMenuActive()
+	{
+		if(PauseMenu != null)
+		return PauseMenu.activeSelf;
+	}
 	
 	public void LoadLevel(int lvl)			//lädt das ausgewählte lvl abhängig seiner Nummer
 	{
@@ -164,7 +169,6 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 	public void ContinueLevel()		// weiter button im PauseMenu ; Pause Menu wird inaktiv
 	{
-
 		Time.timeScale = 1.0f;
 		PauseMenu.SetActive(false);
 
