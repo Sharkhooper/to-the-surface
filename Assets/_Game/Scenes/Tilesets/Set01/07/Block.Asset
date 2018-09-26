@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85c106dd6ad68a043a95570cbdd83ca7, type: 3}
   m_Name: Block
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 27b67f004824dbc489a8a8918a9f2ea8, type: 3}
+  sprite: {fileID: 21300000, guid: 178775aa3c81a9249949f937636a750c, type: 3}
   rotation: 0
   top:
     left: 1

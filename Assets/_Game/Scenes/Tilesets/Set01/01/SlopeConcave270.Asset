@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85c106dd6ad68a043a95570cbdd83ca7, type: 3}
   m_Name: SlopeConcave270
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 13fcf170ea8843e46b3e24ddf5c40113, type: 3}
+  sprite: {fileID: 21300000, guid: c3dbffc74aa06cd4bbfa253185468a0a, type: 3}
   rotation: 3
   top:
     left: 2
