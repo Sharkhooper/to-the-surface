@@ -24,6 +24,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 	private bool inLevel = false;
 	
 
+	private LoadSave ls = new LoadSave();
 	
 
 	//Awake is always called before any Start functions
@@ -33,8 +34,18 @@ public class GameManager : SingletonBehaviour<GameManager>
 		HighestLevel = 1;
 		
 		lastLevel = SceneManager.sceneCountInBuildSettings-2;
-		
-		
+
+
+
+		if (ls.DoesSaveFileExist())
+		{
+			int tmp = 1;
+
+			ls.Load(out currentLevel, out tmp);
+			HighestLevel = tmp;
+
+		}
+
 	}
 
 	private void Update()
@@ -117,6 +128,9 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 		if (currentLevel > HighestLevel)
 			HighestLevel++;
+
+		int tmp = HighestLevel;
+		ls.Safe(currentLevel,tmp);
 		
 		LoadLevel(currentLevel);
 
@@ -184,6 +198,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 	
 
 
+	
 	
 	
 }
