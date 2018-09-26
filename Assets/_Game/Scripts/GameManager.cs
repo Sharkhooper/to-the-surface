@@ -73,8 +73,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 	public bool PauseMenuActive()
 	{
-		if(PauseMenu != null)
-		return PauseMenu.activeSelf;
+		
 	}
 	
 	public void LoadLevel(int lvl)			//lädt das ausgewählte lvl abhängig seiner Nummer
@@ -88,19 +87,6 @@ public class GameManager : SingletonBehaviour<GameManager>
 		{
 			load = "Level" + lvl;
 		}
-
-
-		if (PauseMenu==null)				// erstellt das PauseMenu wenn es noch keines gibt
-		{
-			
-			PauseMenu=Instantiate(Resources.Load("PauseMenu",typeof(GameObject)))as GameObject;
-	
-		}
-
-		PauseMenu.SetActive(false);			// macht PAuse menu inaktiv um es nicht über dem Spiel zu haben
-
-
-
 
 		inLevel = true;
 		SceneManager.LoadScene(load,LoadSceneMode.Single);
@@ -150,15 +136,10 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 	public void PauseLevel()		// pausiert das lvl indem das Gameobject PauseMenu aktiv wird
 	{
-		
-		
 		if (PauseMenu==null)				// erstellt das PauseMenu wenn es noch keines gibt
 		{
-			
 			PauseMenu=Instantiate(Resources.Load("PauseMenu",typeof(GameObject)))as GameObject;
-	
 		}
-
 		
 		Time.timeScale = 0.0f;
 		PauseMenu.SetActive(true);
