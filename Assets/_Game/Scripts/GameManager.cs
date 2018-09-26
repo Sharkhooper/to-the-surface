@@ -26,6 +26,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 
 	private GameObject PauseMenu =null ;		//Damit wird das PauseMenu gespeichert
+	private bool inLevel = false;
 	
 
 	
@@ -46,8 +47,27 @@ public class GameManager : SingletonBehaviour<GameManager>
 		
 		
 	}
-	
-		//	Update nicht benötigt da alle veränderungen über Methodenaufrufe laufen
+
+	private void Update()
+	{
+		if (inLevel)
+		{
+			if (Input.GetKey("escape"))
+			{
+				if( !(PauseMenu.activeSelf))
+				PauseLevel();
+				else
+				{
+					ContinueLevel();
+				}
+				
+				
+			}
+			
+		}
+	}
+
+	//	Update nicht benötigt da alle veränderungen über Methodenaufrufe laufen
 
 
 	
@@ -75,8 +95,9 @@ public class GameManager : SingletonBehaviour<GameManager>
 		PauseMenu.SetActive(false);			// macht PAuse menu inaktiv um es nicht über dem Spiel zu haben
 
 
-		
 
+
+		inLevel = true;
 		SceneManager.LoadScene(load,LoadSceneMode.Single);
 		
 		
@@ -131,13 +152,6 @@ public class GameManager : SingletonBehaviour<GameManager>
 		}
 
 		
-		
-		
-		
-		
-		
-		
-		
 		Time.timeScale = 0.0f;
 		PauseMenu.SetActive(true);
 		
@@ -160,10 +174,10 @@ public class GameManager : SingletonBehaviour<GameManager>
 		
 		Destroy(PauseMenu);			// Da im hauptmenu kein PauseMenu gebraucht wird wird es zerstört und wieder erstellt wenn man ein lvl startet
 		PauseMenu = null;
-		
-		
-		
-		
+
+
+
+		inLevel = false;
 		SceneManager.LoadScene("MainMenu",LoadSceneMode.Single);		// aufruf des Mainmenu
 		
 		
