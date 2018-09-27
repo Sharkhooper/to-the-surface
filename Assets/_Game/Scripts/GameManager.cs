@@ -33,7 +33,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 	{
 		HighestLevel = 1;
 		
-		LastLevel = SceneManager.sceneCountInBuildSettings-2;
+		LastLevel = SceneManager.sceneCountInBuildSettings-1;
 
 
 		if (ls.DoesSaveFileExist())
@@ -155,6 +155,8 @@ public class GameManager : SingletonBehaviour<GameManager>
 		PauseMenu = null;
 
 		inLevel = false;
+		
+		
 		SceneManager.LoadScene("MainMenu",LoadSceneMode.Single);		// aufruf des Mainmenu
 	}
 
@@ -165,6 +167,8 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 	}
 
+	
+	
 	
 
 
