@@ -5,12 +5,12 @@ using UnityEngine;
 public class CannonController : MonoBehaviour
 {
 	public GameObject cannonBarrel;
-	public GameObject firePrefab;
+	public GameObject fire;
 	private GameObject currentFire;
-	public float shotsPerSeconds;
 	private float cooldown;
-	public float speed = 10f;
-	
+
+	[SerializeField] private float shotsPerSeconds;
+	[SerializeField] private float speed = 10f;
 	[SerializeField] private Animator anim;
 	
 	void FixedUpdate ()
@@ -27,7 +27,7 @@ public class CannonController : MonoBehaviour
 
 	public void Fire()
 	{
-		currentFire = Instantiate(firePrefab, cannonBarrel.transform.position, cannonBarrel.transform.rotation);
+		currentFire = Instantiate(fire, cannonBarrel.transform.position, cannonBarrel.transform.rotation);
 		cooldown = 1f / (shotsPerSeconds);
 		// Drehung
 		currentFire.transform.rotation = Quaternion.Euler(0, 0, 90) * cannonBarrel.transform.rotation;
