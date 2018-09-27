@@ -21,7 +21,9 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 
 	private GameObject PauseMenu =null ;		//Damit wird das PauseMenu gespeichert
-	public bool inLevel = false;
+	public bool inLevel { get; set; }
+	
+	
 	
 
 	private LoadSave ls = new LoadSave();
@@ -31,6 +33,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 	private void Awake()
 	{
+		inLevel = false;
 		HighestLevel = 1;
 		
 		LastLevel = SceneManager.sceneCountInBuildSettings-1;
@@ -47,28 +50,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 	}
 
-	void Update()
-	{
-		/*
-		if (inLevel)
-		{
-			Debug.Log("In Level");
-			if (Input.GetKeyDown(KeyCode.Escape))
-			{
-				Debug.Log("Escape");
-				if( !(PauseMenu.activeSelf))
-				{
-					PauseLevel();
-				}
-				else
-				{
-					ContinueLevel();
-				}
-			}
-			Debug.Log("InLevel= " + inLevel);
-		}
-		*/
-	}
+	
 
 	//	Update nicht benötigt da alle veränderungen über Methodenaufrufe laufen
 	
