@@ -271,11 +271,13 @@ public class PlayerActor : MonoBehaviour {
 
 				case OnLandAction.MoveConcaveLeft:
 					transform.position = tilemap.GetCellCenterWorld(celllPos);
+					animator.SetTrigger("shouldSlide");
 					yield return Move(MovementDirection.Left);
 					break;
 
 				case OnLandAction.MoveConcaveRight:
 					transform.position = tilemap.GetCellCenterWorld(celllPos);
+					animator.SetTrigger("shouldSlide");
 					yield return Move(MovementDirection.Right);
 					break;
 
@@ -283,6 +285,7 @@ public class PlayerActor : MonoBehaviour {
 					transform.position = tilemap.GetCellCenterWorld(celllPos - direction);
 					facing = MovementDirection.Left;
 					UpdateOrientation();
+					animator.SetTrigger("shouldSlide");
 					yield return Rotate(orientation.GetLeft(), orientation.GetDown(), orientation.GetLeft(), 1.0f, 0.2f);
 					yield return Move(MovementDirection.Left);
 					break;
@@ -291,6 +294,7 @@ public class PlayerActor : MonoBehaviour {
 					transform.position = tilemap.GetCellCenterWorld(celllPos - direction);
 					facing = MovementDirection.Right;
 					UpdateOrientation();
+					animator.SetTrigger("shouldSlide");
 					yield return Rotate(orientation.GetRight(), orientation.GetDown(), orientation.GetRight(), 1.0f, 0.1f);
 					yield return Move(MovementDirection.Right);
 					break;
