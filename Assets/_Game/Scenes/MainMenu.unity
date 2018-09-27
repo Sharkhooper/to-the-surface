@@ -725,7 +725,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 805473915}
         m_MethodName: LoadLevel
         m_Mode: 3
         m_Arguments:
@@ -1047,7 +1047,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 805473915}
         m_MethodName: LoadLevel
         m_Mode: 3
         m_Arguments:
@@ -1316,7 +1316,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 805473915}
         m_MethodName: LoadLevel
         m_Mode: 3
         m_Arguments:
@@ -2010,7 +2010,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 805473915}
         m_MethodName: LoadLevel
         m_Mode: 3
         m_Arguments:
@@ -2118,7 +2118,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 805473915}
         m_MethodName: LoadLevel
         m_Mode: 3
         m_Arguments:
@@ -3739,7 +3739,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 805473915}
         m_MethodName: LoadLevel
         m_Mode: 3
         m_Arguments:
@@ -5084,7 +5084,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 805473915}
         m_MethodName: LoadLevel
         m_Mode: 3
         m_Arguments:
@@ -5643,7 +5643,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 805473915}
         m_MethodName: LoadLevel
         m_Mode: 3
         m_Arguments:
@@ -6316,7 +6316,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 805473915}
         m_MethodName: LoadLevel
         m_Mode: 3
         m_Arguments:
@@ -6497,7 +6497,7 @@ GameObject:
   - component: {fileID: 1265616450}
   - component: {fileID: 1265616449}
   m_Layer: 5
-  m_Name: ButtonNextPage1
+  m_Name: ButtonNextPage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6698,7 +6698,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 805473915}
         m_MethodName: LoadLevel
         m_Mode: 3
         m_Arguments:
@@ -6933,7 +6933,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 805473915}
         m_MethodName: LoadLevel
         m_Mode: 3
         m_Arguments:
@@ -7095,7 +7095,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 805473915}
         m_MethodName: LoadLevel
         m_Mode: 3
         m_Arguments:
@@ -7203,7 +7203,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 805473915}
         m_MethodName: LoadLevel
         m_Mode: 3
         m_Arguments:
@@ -8381,7 +8381,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 805473915}
         m_MethodName: LoadLevel
         m_Mode: 3
         m_Arguments:
@@ -10450,7 +10450,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 805473915}
         m_MethodName: LoadLevel
         m_Mode: 3
         m_Arguments:
@@ -10580,7 +10580,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 805473915}
         m_MethodName: LoadLevel
         m_Mode: 3
         m_Arguments:
@@ -10636,6 +10636,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114010724445499162, guid: 28691e34a255994418a523676d503274,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4072187319000630, guid: 28691e34a255994418a523676d503274, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -10762,6 +10767,36 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Exit
       objectReference: {fileID: 0}
+    - target: {fileID: 114010724445499162, guid: 28691e34a255994418a523676d503274,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114010724445499162, guid: 28691e34a255994418a523676d503274,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114010724445499162, guid: 28691e34a255994418a523676d503274,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114010724445499162, guid: 28691e34a255994418a523676d503274,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 805473915}
+    - target: {fileID: 114010724445499162, guid: 28691e34a255994418a523676d503274,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: OpenLevelSelect
+      objectReference: {fileID: 0}
+    - target: {fileID: 114010724445499162, guid: 28691e34a255994418a523676d503274,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28691e34a255994418a523676d503274, type: 2}
   m_IsPrefabAsset: 0
@@ -10824,7 +10859,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 805473915}
         m_MethodName: LoadLevel
         m_Mode: 3
         m_Arguments:
@@ -11005,7 +11040,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 805473915}
         m_MethodName: LoadLevel
         m_Mode: 3
         m_Arguments:
@@ -11420,7 +11455,7 @@ GameObject:
   - component: {fileID: 1846704830}
   - component: {fileID: 1846704829}
   m_Layer: 5
-  m_Name: ButtonNextPage2
+  m_Name: ButtonNextPage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
