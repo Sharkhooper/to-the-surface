@@ -7612,16 +7612,6 @@ Prefab:
       propertyPath: tilemap
       value: 
       objectReference: {fileID: 1273832804}
-    - target: {fileID: 114577748845638106, guid: 8423f8de9823deb4b8e438ad4f85f721,
-        type: 2}
-      propertyPath: orientation
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114577748845638106, guid: 8423f8de9823deb4b8e438ad4f85f721,
-        type: 2}
-      propertyPath: facing
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8423f8de9823deb4b8e438ad4f85f721, type: 2}
   m_IsPrefabAsset: 0
