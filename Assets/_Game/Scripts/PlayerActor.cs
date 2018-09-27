@@ -35,6 +35,8 @@ public class PlayerActor : MonoBehaviour {
 
 	[SerializeField] private Animator animator;
 
+	[SerializeField] private float peekingDistance;
+
 	private void Start() {
 		Cinemachine.CinemachineVirtualCamera cam = Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>();
 
@@ -59,8 +61,9 @@ public class PlayerActor : MonoBehaviour {
 			StartCoroutine(Jump());
 		}
 
+		animator.SetBool("isPeeking", inputProvider.PeekingPressed);
 		if (inputProvider.PeekingPressed) {
-			trackingPoint.transform.localPosition = Vector3.up * 9;
+			trackingPoint.transform.localPosition = Vector3.up * peekingDistance;
 		} else {
 			trackingPoint.transform.localPosition = Vector3.zero;
 		}

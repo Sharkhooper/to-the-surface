@@ -913,6 +913,11 @@ Prefab:
       propertyPath: animator
       value: 
       objectReference: {fileID: 1927486328}
+    - target: {fileID: 114577748845638106, guid: 8423f8de9823deb4b8e438ad4f85f721,
+        type: 2}
+      propertyPath: peekingDistance
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8423f8de9823deb4b8e438ad4f85f721, type: 2}
   m_IsPrefabAsset: 0
