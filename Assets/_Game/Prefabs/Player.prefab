@@ -106,7 +106,7 @@ MonoBehaviour:
   facing: 1
   inputProvider: {fileID: 11400000, guid: 70f7d7f3479adef4db8d8c8e4ac5a91c, type: 2}
   animator: {fileID: 95392249558912674}
-  peekingDistance: 9
+  peekingDistance: 7
 --- !u!212 &212359673814677190
 SpriteRenderer:
   m_ObjectHideFlags: 1
