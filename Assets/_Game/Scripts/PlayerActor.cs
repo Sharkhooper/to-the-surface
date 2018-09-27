@@ -55,7 +55,7 @@ public class PlayerActor : MonoBehaviour {
 
 		transform.position = tilemap.GetCellCenterWorld(tilemap.WorldToCell(transform.position));
 
-		if (inputProvider.InteractionPressed) {
+		if (inputProvider.InteractionPressed && Interactible != null) {
 			Interactible.Interact();
 		}
 
