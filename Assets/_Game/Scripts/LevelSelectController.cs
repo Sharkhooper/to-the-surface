@@ -12,7 +12,7 @@ public class LevelSelectController : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+		gm = GameManager.Instance;
 		ActivateAllPages();
 		UpdateLevelSelect();
 		DisablePagesAfterFirst();
@@ -22,23 +22,60 @@ public class LevelSelectController : MonoBehaviour
 	public void UpdateLevelSelect()
 	{
 		int highestLevel = gm.HighestLevel;
+		int lastLevel = 10;
+			//gm.LastLevel;
+		int pageSize = 6;
 		
-		//Static implementation for last level
-		for (int i = highestLevel+1; i <= 18; i++)
+		for (int i = 1; i <= 18; i++)
 		{
 			String buttonName = "ButtonLevel" + i;
 			if (GameObject.Find(buttonName) != null)
 			{
 				GameObject button = GameObject.Find(buttonName);
 				Image image = button.transform.Find("Image").GetComponent<Image>();
-				image.sprite = Resources.Load("lockedTEMP", typeof(Sprite)) as Sprite;
-				button.GetComponent<Button>().interactable = false;
+				if (i <= highestLevel)
+				{
+					String loadStr = i < 10 ? "LevelSelect/Level0" + i : "LevelSelect/Level" + i;
+					image.sprite = Resources.Load(loadStr, typeof(Sprite)) as Sprite;
+					button.GetComponent<Button>().interactable = true;
+				}
+				else if (i <= lastLevel)
+				{
+					image.sprite = Resources.Load("LevelSelect/lockedTEMP", typeof(Sprite)) as Sprite;
+					button.GetComponent<Button>().interactable = false;
+				}
+				else
+				{
+					Debug.Log("too many buttons");
+					button.SetActive(false);
+					if (i % 6 == 0)
+						DisableFollowingPages(i/6+1);
+						return;
+				}
 			}
 			else
 			{
 				Debug.Log("Button not found");
 			}
 		}
+	}
+
+	private void DisableFollowingPages(int page)
+	{
+		if(page == 1)
+			if(GameObject.Find("ButtonNextPage1") != null)
+				GameObject.Find("ButtonNextPage1").SetActive(false);
+			else
+			{
+				Debug.Log("not found 1");
+			}
+		if(page==2)
+			if(GameObject.Find("ButtonNextPage2") != null)
+				GameObject.Find("ButtonNextPage2").SetActive(false);
+			else
+			{
+				Debug.Log("not found 2");
+			}
 	}
 
 	//Disables all pages except the first one

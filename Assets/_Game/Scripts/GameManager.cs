@@ -17,7 +17,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 	
 	private int currentLevel = 1; //Current level number, expressed in game as "Day 1".
 	public int HighestLevel { get; private set; }
-	private int lastLevel;		//Die Anzahl aller exestierenden Level (Maximale ANzahl Level im Speil)
+	public int LastLevel{ get; private set; }	//Die Anzahl aller existierenden Level (Maximale Anzahl Level im Spiel)
 
 
 	private GameObject PauseMenu =null ;		//Damit wird das PauseMenu gespeichert
@@ -33,7 +33,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 	{
 		HighestLevel = 1;
 		
-		lastLevel = SceneManager.sceneCountInBuildSettings-2;
+		LastLevel = SceneManager.sceneCountInBuildSettings-2;
 
 
 		if (ls.DoesSaveFileExist())
@@ -103,7 +103,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 	public void LevelFinished()		// wenn man ein Level beendet hat
 	{
-		if(currentLevel<lastLevel)
+		if(currentLevel<LastLevel)
 		currentLevel++;
 
 		if (currentLevel > HighestLevel)
