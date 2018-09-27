@@ -7,27 +7,20 @@ using UnityEngine.Tilemaps;
 public class PlayerActor : MonoBehaviour {
 	private const int MAX_STEPS = 128;
 
+	private const float CONCAVE_RADIUS = 0.5f;
+	private const float CONVEX_RADIUS = 1.5f;
+
+	private const float MOVE_ANIMATION_TIME_PER_TILE = 0.25f;
+	private const float JUMP_ANIMATION_TIME_PER_TILE = 0.125f;
+
+	private const float CONCAVE_ANIMATION_TIME = 1.0f / Mathf.PI;
+	private const float CONVEX_ANIMATION_TIME = 3.0f / 16.0f * Mathf.PI;
+
 	private bool isMoving;
 
 	private enum MovementDirection {
 		Left = -1,
 		Right = 1
-	}
-
-	private struct RouteSnapshot {
-		public Vector3 position;
-		public Orientation orientation;
-	}
-
-	/// <summary>
-	/// Custom Modulo that does not return negative values
-	/// </summary>
-	/// <param name="i">Input value</param>
-	/// <param name="m">Divisior</param>
-	/// <returns>i % m</returns>
-	private static int Mod(int i, int m) {
-		int tmp = i % m;
-		return tmp < 0 ? tmp + m : tmp;
 	}
 
 	[SerializeField] private GameObject trackingPoint;
@@ -38,7 +31,11 @@ public class PlayerActor : MonoBehaviour {
 
 	[SerializeField] private MovementDirection facing = MovementDirection.Right;
 
-	[SerializeField] public InputProvider inputProvider;
+	[SerializeField] private InputProvider inputProvider;
+
+	[SerializeField] private Animator animator;
+
+	[SerializeField] private float peekingDistance;
 
 	private void Start() {
 		Cinemachine.CinemachineVirtualCamera cam = Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>();
@@ -49,6 +46,7 @@ public class PlayerActor : MonoBehaviour {
 	}
 
 	private void Update() {
+		animator.SetBool("isRunning", isMoving);
 		if (isMoving) return;
 
 		transform.position = tilemap.GetCellCenterWorld(tilemap.WorldToCell(transform.position));
@@ -63,25 +61,39 @@ public class PlayerActor : MonoBehaviour {
 			StartCoroutine(Jump());
 		}
 
+		animator.SetBool("isPeeking", inputProvider.PeekingPressed);
 		if (inputProvider.PeekingPressed) {
-			trackingPoint.transform.localPosition = Vector3.up * 9;
+			trackingPoint.transform.localPosition = Vector3.up * peekingDistance;
 		} else {
 			trackingPoint.transform.localPosition = Vector3.zero;
 		}
 	}
 
 	private void UpdateOrientation() {
-		Vector3 euler = new Vector3(0, 0, (int) orientation * -90.0f);
-		if (orientation == Orientation.Left || orientation == Orientation.Right) {
-			euler.x = facing == MovementDirection.Right ? 0 : 180.0f;
-		} else if (orientation == Orientation.Up || orientation == Orientation.Down) {
-			euler.y = facing == MovementDirection.Right ? 0 : 180.0f;
-		}
-
-		transform.rotation = Quaternion.Euler(euler);
+		transform.rotation = GetRotation(orientation, facing);
 	}
 
-	private Vector3Int GetDirectionVector(Orientation o) {
+	private static Quaternion GetRotation(Orientation orientation, MovementDirection facing) {
+		Vector3 euler = new Vector3(0, 0, (int) orientation * -90.0f);
+		switch (orientation) {
+			case Orientation.Left:
+			case Orientation.Right:
+				euler.x = facing == MovementDirection.Right ? 0 : 180.0f;
+				break;
+
+			case Orientation.Up:
+			case Orientation.Down:
+				euler.y = facing == MovementDirection.Right ? 0 : 180.0f;
+				break;
+
+			default:
+				throw new ArgumentOutOfRangeException();
+		}
+
+		return Quaternion.Euler(euler);
+	}
+
+	private static Vector3Int GetDirectionVector(Orientation o) {
 		switch (o) {
 			case Orientation.Up: return Vector3Int.up;
 			case Orientation.Left: return Vector3Int.left;
@@ -95,14 +107,16 @@ public class PlayerActor : MonoBehaviour {
 	private IEnumerator Move(MovementDirection direction) {
 		isMoving = true;
 
-		List<RouteSnapshot> route = new List<RouteSnapshot>();
+		List<IEnumerator> route = new List<IEnumerator>();
 
 		Orientation o = orientation;
-		Vector3Int celllPos = tilemap.WorldToCell(transform.position);
+		Vector3Int cellPos = tilemap.WorldToCell(transform.position);
 		bool isCompleteRoute = false;
 		bool isValidRoute = true;
 
 		int numSteps = 0;
+
+		route.Add(Move(o.RotateClockwise((int) direction), 0.5f, MOVE_ANIMATION_TIME_PER_TILE * 0.5f));
 
 		while (!isCompleteRoute && isValidRoute) {
 			if (numSteps++ > MAX_STEPS) {
@@ -110,26 +124,27 @@ public class PlayerActor : MonoBehaviour {
 				break;
 			}
 
-			Vector3Int directionVec = GetDirectionVector((Orientation) Mod((int) o + (int) direction, 4));
-			Vector3Int downVec = GetDirectionVector((Orientation) Mod((int) o + 2, 4));
+			Orientation directionOrientation = o.RotateClockwise((int) direction);
+			Vector3Int directionVec = GetDirectionVector(directionOrientation);
+			Vector3Int downVec = GetDirectionVector(o.GetDown());
 
-			Orientation enterFace = (Orientation) Mod((int) o - (int) direction, 4);
+			Orientation enterFace = directionOrientation.GetDown();
 
-			Vector3Int adjacentCellPos = celllPos + directionVec;
+			Vector3Int adjacentCellPos = cellPos + directionVec;
 			Vector3Int adjacentDownCellPos = adjacentCellPos + downVec;
 			RotatedTile adjacentTile = tilemap.GetTile<RotatedTile>(adjacentCellPos);
 			RotatedTile adjacentDownTile = tilemap.GetTile<RotatedTile>(adjacentDownCellPos);
 
-			Debug.DrawLine(tilemap.GetCellCenterWorld(celllPos), tilemap.GetCellCenterWorld(adjacentCellPos), adjacentTile == null ? Color.red : Color.green);
-			Debug.DrawLine(tilemap.GetCellCenterWorld(celllPos), tilemap.GetCellCenterWorld(adjacentDownCellPos), adjacentDownTile == null ? Color.red : Color.green);
+			Debug.DrawLine(tilemap.GetCellCenterWorld(cellPos), tilemap.GetCellCenterWorld(adjacentCellPos), adjacentTile == null ? Color.red : Color.green);
+			Debug.DrawLine(tilemap.GetCellCenterWorld(cellPos), tilemap.GetCellCenterWorld(adjacentDownCellPos), adjacentDownTile == null ? Color.red : Color.green);
 
 			if (adjacentTile != null) {
+				cellPos += directionVec;
 				switch (direction) {
 					case MovementDirection.Left:
 						if (adjacentTile[enterFace].enter == OnEnterAction.MoveConcaveRight) {
-							// TODO: Add animation
-							celllPos += directionVec;
-							o = (Orientation) Mod((int) o + 1, 4); // turn right
+							o = o.GetRight();
+							route.Add(Rotate(directionOrientation, directionOrientation.GetRight(), o, CONCAVE_RADIUS, CONCAVE_ANIMATION_TIME));
 						} else {
 							isValidRoute = false;
 						}
@@ -138,9 +153,8 @@ public class PlayerActor : MonoBehaviour {
 
 					case MovementDirection.Right:
 						if (adjacentTile[enterFace].enter == OnEnterAction.MoveConcaveLeft) {
-							// TODO: Add animation
-							celllPos += directionVec;
-							o = (Orientation) Mod((int) o - 1, 4); // turn left
+							o = o.GetLeft();
+							route.Add(Rotate(directionOrientation, directionOrientation.GetLeft(), o, CONCAVE_RADIUS, CONCAVE_ANIMATION_TIME));
 						} else {
 							isValidRoute = false;
 						}
@@ -159,15 +173,16 @@ public class PlayerActor : MonoBehaviour {
 								break;
 
 							case OnWalkOverAction.MoveToCenter:
-								// TODO: Add animation
-								celllPos += directionVec;
+								cellPos += directionVec;
 								isCompleteRoute = true;
+								route.Add(Move(directionOrientation, 0.5f, MOVE_ANIMATION_TIME_PER_TILE * 0.5f));
 								break;
 
 							case OnWalkOverAction.MoveConvex:
 								// TODO: Add animation
-								celllPos += directionVec + directionVec + downVec;
-								o = (Orientation) Mod((int) o - 1, 4); // turn left
+								cellPos += directionVec * 2 + downVec;
+								o = o.GetLeft();
+								route.Add(Rotate(directionOrientation, directionOrientation.GetLeft(), o, CONVEX_RADIUS, CONVEX_ANIMATION_TIME));
 								break;
 
 							default:
@@ -183,15 +198,15 @@ public class PlayerActor : MonoBehaviour {
 								break;
 
 							case OnWalkOverAction.MoveToCenter:
-								// TODO: Add animation
-								celllPos += directionVec;
+								cellPos += directionVec;
 								isCompleteRoute = true;
+								route.Add(Move(directionOrientation, 0.5f, MOVE_ANIMATION_TIME_PER_TILE * 0.5f));
 								break;
 
 							case OnWalkOverAction.MoveConvex:
-								// TODO: Add animation
-								celllPos += directionVec + directionVec + downVec;
-								o = (Orientation) Mod((int) o + 1, 4); // turn right
+								cellPos += directionVec * 2 + downVec;
+								o = o.GetRight();
+								route.Add(Rotate(directionOrientation, directionOrientation.GetRight(), o, CONVEX_RADIUS, CONVEX_ANIMATION_TIME));
 								break;
 
 							default:
@@ -206,22 +221,14 @@ public class PlayerActor : MonoBehaviour {
 			} else {
 				isValidRoute = false;
 			}
-
-			if (isValidRoute) {
-				route.Add(new RouteSnapshot {
-					position = tilemap.GetCellCenterWorld(celllPos),
-					orientation = o
-				});
-			}
 		}
 
+		facing = direction;
+		UpdateOrientation();
+
 		if (isValidRoute) {
-			facing = direction;
-			foreach (RouteSnapshot v in route) {
-				transform.position = v.position;
-				orientation = v.orientation;
-				UpdateOrientation();
-				yield return new WaitForSeconds(0.25f);
+			foreach (IEnumerator a in route) {
+				yield return a;
 			}
 		}
 
@@ -233,7 +240,8 @@ public class PlayerActor : MonoBehaviour {
 		Vector3Int celllPos = tilemap.WorldToCell(transform.position);
 		Vector3Int direction = GetDirectionVector(orientation);
 		RotatedTile tile = null;
-		for (int i = 0; i < MAX_STEPS; ++i) {
+		int i = 0;
+		for (; i < MAX_STEPS; ++i) {
 			celllPos += direction;
 			RotatedTile hit = tilemap.GetTile<RotatedTile>(celllPos);
 			if (hit != null) {
@@ -243,46 +251,51 @@ public class PlayerActor : MonoBehaviour {
 		}
 
 		if (tile != null) {
-			Debug.DrawLine(tilemap.GetCellCenterWorld(tilemap.WorldToCell(transform.position)), tilemap.GetCellCenterWorld(celllPos), Color.red);
-			OnLandAction action = tile[(Orientation) Mod((int) orientation + 2, 4)].land;
+			animator.SetBool("isFalling", true);
+			orientation = orientation.GetDown();
+			UpdateOrientation();
 
-			yield return new WaitForSeconds(0.25f);
+			if (i != 0) {
+				yield return Move(orientation.GetDown(), i, i * JUMP_ANIMATION_TIME_PER_TILE);
+			}
+
+			animator.SetBool("isFalling", false);
+
+			Debug.DrawLine(tilemap.GetCellCenterWorld(tilemap.WorldToCell(transform.position)), tilemap.GetCellCenterWorld(celllPos), Color.red);
+			OnLandAction action = tile[orientation].land;
+
 			switch (action) {
 				case OnLandAction.None:
-					transform.position = celllPos - direction;
-					orientation = (Orientation)Mod((int)orientation + 2, 4);
-					UpdateOrientation();
+					transform.position = tilemap.GetCellCenterWorld(celllPos - direction);
 					break;
 
 				case OnLandAction.MoveConcaveLeft:
-					transform.position = celllPos;
-					orientation = (Orientation)Mod((int)orientation + 2, 4);
-					UpdateOrientation();
-					yield return new WaitForSeconds(0.25f);
+					transform.position = tilemap.GetCellCenterWorld(celllPos);
+					animator.SetTrigger("shouldSlide");
 					yield return Move(MovementDirection.Left);
 					break;
 
 				case OnLandAction.MoveConcaveRight:
-					transform.position = celllPos;
-					orientation = (Orientation)Mod((int)orientation + 2, 4);
-					UpdateOrientation();
-					yield return new WaitForSeconds(0.25f);
+					transform.position = tilemap.GetCellCenterWorld(celllPos);
+					animator.SetTrigger("shouldSlide");
 					yield return Move(MovementDirection.Right);
 					break;
 
 				case OnLandAction.MoveConvexLeft:
-					transform.position = celllPos + GetDirectionVector((Orientation)Mod((int)orientation + 1, 4));
-					orientation = (Orientation) Mod((int) orientation + 1, 4);
+					transform.position = tilemap.GetCellCenterWorld(celllPos - direction);
+					facing = MovementDirection.Left;
 					UpdateOrientation();
-					yield return new WaitForSeconds(0.25f);
+					animator.SetTrigger("shouldSlide");
+					yield return Rotate(orientation.GetLeft(), orientation.GetDown(), orientation.GetLeft(), 1.0f, 0.2f);
 					yield return Move(MovementDirection.Left);
 					break;
 
 				case OnLandAction.MoveConvexRight:
-					transform.position = celllPos + GetDirectionVector((Orientation)Mod((int)orientation - 1, 4));
-					orientation = (Orientation)Mod((int)orientation - 1, 4);
+					transform.position = tilemap.GetCellCenterWorld(celllPos - direction);
+					facing = MovementDirection.Right;
 					UpdateOrientation();
-					yield return new WaitForSeconds(0.25f);
+					animator.SetTrigger("shouldSlide");
+					yield return Rotate(orientation.GetRight(), orientation.GetDown(), orientation.GetRight(), 1.0f, 0.1f);
 					yield return Move(MovementDirection.Right);
 					break;
 
@@ -292,5 +305,48 @@ public class PlayerActor : MonoBehaviour {
 		}
 
 		isMoving = false;
+	}
+
+	private IEnumerator Move(Orientation direction, float distance, float time) {
+		Vector3 vec = GetDirectionVector(direction);
+		vec *= distance;
+
+		Vector3 start = transform.position;
+
+		for (float t = 0; t <= time; t += Time.deltaTime) {
+			transform.position = Vector3.Lerp(start, start + vec, t / time);
+			yield return null;
+		}
+
+		transform.position = start + vec;
+	}
+
+	private IEnumerator Rotate(Orientation startDirection, Orientation endDirection, Orientation target, float curveRadius, float time) {
+		Vector3 startDir = GetDirectionVector(startDirection);
+		Vector3 endDir = GetDirectionVector(endDirection);
+
+		Vector3 startPos = transform.position;
+		Vector3 endPos = transform.position + (startDir + endDir) * curveRadius;
+
+		Vector3 rotationCenter = startPos + endDir * curveRadius;
+
+		Quaternion startRotation = transform.rotation;
+		Quaternion endRotation = GetRotation(target, facing);
+
+		Quaternion targetRortation = Quaternion.Euler(0, 0, startDirection.GetLeft() == endDirection ? 90.0f : -90.0f);
+
+		for (float t = 0; t <= time; t += Time.deltaTime) {
+			Quaternion rot = Quaternion.Lerp(Quaternion.identity, targetRortation, t / time);
+			Debug.DrawLine(transform.position, rotationCenter, Color.red);
+
+			transform.position = rotationCenter - rot * endDir * curveRadius;
+			transform.rotation = Quaternion.Slerp(startRotation, endRotation, t / time);
+
+			yield return null;
+		}
+
+		transform.position = endPos;
+		orientation = target;
+		UpdateOrientation();
 	}
 }
