@@ -21,9 +21,11 @@ public class LevelSelectController : MonoBehaviour
 	// Locks all currently not unlocked levels
 	public void UpdateLevelSelect()
 	{
-		int highestLevel = gm.HighestLevel;
-		int lastLevel = 10;
-			//gm.LastLevel;
+		if(gm == null)
+			gm = GameManager.Instance;
+		int highestLevel = 5;
+			//gm.HighestLevel;
+		int lastLevel = gm.LastLevel;
 		
 		for (int i = 1; i <= 18; i++)
 		{
@@ -59,10 +61,6 @@ public class LevelSelectController : MonoBehaviour
 						return;
 				}
 			}
-			else
-			{
-				Debug.Log("Button not found");
-			}
 		}
 	}
 
@@ -88,8 +86,15 @@ public class LevelSelectController : MonoBehaviour
 		}
 	}
 
-	private void LoadLevel(int level)
+	public void LoadLevel(int level)
 	{
 		gm.LoadLevel(level);
+	}
+
+	public void OpenLevelSelect()
+	{
+		ActivateAllPages();
+		UpdateLevelSelect();
+		DisablePagesAfterFirst();
 	}
 }
