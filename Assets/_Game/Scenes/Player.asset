@@ -13,3 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jump: 32
   peek: 304
+  interaction: 13

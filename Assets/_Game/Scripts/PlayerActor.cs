@@ -18,6 +18,10 @@ public class PlayerActor : MonoBehaviour {
 
 	private Coroutine movementRoutine;
 
+	public IInteractible Interactible { get; set; }
+
+	public Orientation Orientation => orientation;
+
 	private enum MovementDirection {
 		Left = -1,
 		Right = 1
@@ -50,6 +54,10 @@ public class PlayerActor : MonoBehaviour {
 		if (movementRoutine != null) return;
 
 		transform.position = tilemap.GetCellCenterWorld(tilemap.WorldToCell(transform.position));
+
+		if (inputProvider.InteractionPressed) {
+			Interactible.Interact();
+		}
 
 		IEnumerator movement = GetMovementOperation();
 		if (movement != null) {
