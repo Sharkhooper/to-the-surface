@@ -8,11 +8,16 @@ using UnityEngine.UI;
 public class LevelSelectController : MonoBehaviour
 {
 	private GameManager gm;
+
+	public int highestLevel = -1;
 	
 	// Use this for initialization
 	void Start ()
 	{
 		gm = GameManager.Instance;
+		//Debug
+		if(highestLevel == -1)
+			highestLevel = gm.HighestLevel;
 		ActivateAllPages();
 		UpdateLevelSelect();
 		DisablePagesAfterFirst();
@@ -21,10 +26,8 @@ public class LevelSelectController : MonoBehaviour
 	// Locks all currently not unlocked levels
 	public void UpdateLevelSelect()
 	{
-		int highestLevel = gm.HighestLevel;
 		int lastLevel = 10;
 			//gm.LastLevel;
-		int pageSize = 6;
 		
 		for (int i = 1; i <= 18; i++)
 		{
@@ -49,7 +52,6 @@ public class LevelSelectController : MonoBehaviour
 					Debug.Log("too many buttons");
 					button.SetActive(false);
 					if (i % 6 == 0)
-						DisableFollowingPages(i/6+1);
 						return;
 				}
 			}
@@ -60,6 +62,7 @@ public class LevelSelectController : MonoBehaviour
 		}
 	}
 
+	/*
 	private void DisableFollowingPages(int page)
 	{
 		if(page == 1)
@@ -77,6 +80,7 @@ public class LevelSelectController : MonoBehaviour
 				Debug.Log("not found 2");
 			}
 	}
+	*/
 
 	//Disables all pages except the first one
 	private void DisablePagesAfterFirst()
@@ -98,5 +102,10 @@ public class LevelSelectController : MonoBehaviour
 		{
 			page.SetActive(true);
 		}
+	}
+
+	private void LoadLevel(int level)
+	{
+		gm.LoadLevel(level);
 	}
 }
