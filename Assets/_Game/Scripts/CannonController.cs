@@ -7,32 +7,31 @@ public class CannonController : MonoBehaviour
 	public GameObject cannonBarrel;
 	public GameObject firePrefab;
 	private GameObject currentFire;
-	public float fireRate = 10f;
-	private float fireWait;
+	public float shotsPerSeconds;
+	private float cooldown;
 	public float speed = 10f;
 	
-	// Use this for initialization
-	void Start ()
-	{
-		fireWait = 1f / (fireRate/10f);
-	}
+	[SerializeField] private Animator anim;
 	
-	// Update is called once per frame
 	void FixedUpdate ()
 	{
-		if (fireWait <= 0)
+		if (cooldown <= 0)
 		{
-			currentFire = Instantiate(firePrefab, cannonBarrel.transform.position, cannonBarrel.transform.rotation);
-			fireWait = 1f / (fireRate / 10f);
-			// Drehung
-			currentFire.transform.rotation = Quaternion.Euler(0, 0, 90) * cannonBarrel.transform.rotation;
-			// Flugrichtung
-			currentFire.GetComponent<Rigidbody>().velocity = cannonBarrel.transform.right * speed;
-
+			anim.SetTrigger("Fire");
 		}
 		else
 		{
-			fireWait -= Time.deltaTime;
+			cooldown = Mathf.Max(0, cooldown - Time.deltaTime);
 		}
+	}
+
+	public void Fire()
+	{
+		currentFire = Instantiate(firePrefab, cannonBarrel.transform.position, cannonBarrel.transform.rotation);
+		cooldown = 1f / (shotsPerSeconds);
+		// Drehung
+		currentFire.transform.rotation = Quaternion.Euler(0, 0, 90) * cannonBarrel.transform.rotation;
+		// Flugrichtung
+		currentFire.GetComponent<Rigidbody>().velocity = cannonBarrel.transform.right * speed;
 	}
 }

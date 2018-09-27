@@ -4,16 +4,9 @@ using UnityEngine;
 
 public class ProjektilController : MonoBehaviour
 {
-	private Rigidbody rb;
-	
-	// Use this for initialization
-	void Start ()
-	{
-		rb = GetComponent<Rigidbody>();
-	}
-
 	private void OnTriggerEnter2D(Collider2D other)
 	{
+		Debug.Log(other.name);
 		if (other.gameObject.name != "Cannon" || other.gameObject.name != "CannonBarrel")
 		{
 			

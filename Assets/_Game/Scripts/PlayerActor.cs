@@ -376,7 +376,7 @@ public class PlayerActor : MonoBehaviour {
 		UpdateOrientation();
 	}
 
-	private void Die()
+	public void Die()
 	{
 		transform.position = startingPosition;
 
