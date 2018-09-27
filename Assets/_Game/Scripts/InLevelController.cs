@@ -12,6 +12,15 @@ public class InLevelController : MonoBehaviour {
 		gm.inLevel = true;
 	}
 
+	private void Start()
+	{
+		if (gm.challenger)
+		{
+			GameObject go = Instantiate(Resources.Load<GameObject>("ChallengerModus"));
+
+		}
+	}
+
 	private void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Escape))
@@ -31,4 +40,8 @@ public class InLevelController : MonoBehaviour {
 	{
 		gm.LevelFinished();
 	}
+
+
+
+
 }

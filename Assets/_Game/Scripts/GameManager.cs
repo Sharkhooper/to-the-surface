@@ -22,6 +22,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 	private GameObject PauseMenu =null ;		//Damit wird das PauseMenu gespeichert
 	public bool inLevel { get; set; }
+	public bool challenger { get; set; }
 	
 	
 	
@@ -33,6 +34,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 	private void Awake()
 	{
+		challenger = false;
 		inLevel = false;
 		HighestLevel = 1;
 		
@@ -149,5 +151,21 @@ public class GameManager : SingletonBehaviour<GameManager>
 		int highestLevel = HighestLevel;
 		ls.Safe(currentLevel, highestLevel);
 	}
+
+	public void SetChallengerOn()
+	{
+
+		challenger = true;
+
+	}
+
+	public void SetChallangerOff()
+	{
+
+		challenger = false;
+
+	}
+
+
 
 }
