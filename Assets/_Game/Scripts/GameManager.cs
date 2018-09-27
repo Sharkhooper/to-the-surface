@@ -146,15 +146,8 @@ public class GameManager : SingletonBehaviour<GameManager>
 	{
 		currentLevel = 1;
 		HighestLevel = 1;
-
+		int highestLevel = HighestLevel;
+		ls.Safe(currentLevel, highestLevel);
 	}
 
-	
-	
-	
-
-
-	
-	
-	
 }

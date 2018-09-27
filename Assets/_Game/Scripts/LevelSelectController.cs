@@ -23,8 +23,7 @@ public class LevelSelectController : MonoBehaviour
 	{
 		if(gm == null)
 			gm = GameManager.Instance;
-		int highestLevel = 5;
-			//gm.HighestLevel;
+		int highestLevel = gm.HighestLevel;
 		int lastLevel = gm.LastLevel;
 		
 		for (int i = 1; i <= 18; i++)
