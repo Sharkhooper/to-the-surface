@@ -239,13 +239,12 @@ public class PlayerActor : MonoBehaviour {
 			foreach (IEnumerator a in route) {
 				yield return a;
 			}
-		}
-
-		IEnumerator movement = GetMovementOperation();
-		if (movement != null) {
-			movementRoutine = StartCoroutine(movement);
-		} else {
-			movementRoutine = null;
+		    IEnumerator movement = GetMovementOperation();
+		    if (movement != null) {
+			    movementRoutine = StartCoroutine(movement);
+		    } else {
+			    movementRoutine = null;
+		    }
 		}
 	}
 
