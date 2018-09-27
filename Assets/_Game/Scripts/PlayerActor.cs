@@ -50,7 +50,7 @@ public class PlayerActor : MonoBehaviour {
 
 		startingPosition = transform.position;
 		startingOrientation = orientation;
-		
+
 		if (cam != null) {
 			cam.Follow = trackingPoint.transform;
 		}
@@ -78,6 +78,14 @@ public class PlayerActor : MonoBehaviour {
 			trackingPoint.transform.localPosition = Vector3.up * peekingDistance;
 		} else {
 			trackingPoint.transform.localPosition = Vector3.zero;
+		}
+	}
+
+	private void OnTriggerEnter2D(Collider2D other) {
+		// Collides with Hazard
+		Debug.Log(other.gameObject.layer);
+		if (other.gameObject.layer == 11) {
+			Die();
 		}
 	}
 
@@ -254,12 +262,13 @@ public class PlayerActor : MonoBehaviour {
 			foreach (IEnumerator a in route) {
 				yield return a;
 			}
-		    IEnumerator movement = GetMovementOperation();
-		    if (movement != null) {
-			    movementRoutine = StartCoroutine(movement);
-		    } else {
-			    movementRoutine = null;
-		    }
+
+			IEnumerator movement = GetMovementOperation();
+			if (movement != null) {
+				movementRoutine = StartCoroutine(movement);
+			} else {
+				movementRoutine = null;
+			}
 		}
 	}
 
@@ -376,13 +385,16 @@ public class PlayerActor : MonoBehaviour {
 		UpdateOrientation();
 	}
 
-	public void Die()
-	{
+	public void Die() {
+		if (movementRoutine != null) {
+			StopCoroutine(movementRoutine);
+			movementRoutine = null;
+		}
+
 		transform.position = startingPosition;
 
 		orientation = startingOrientation;
-		
+
 		UpdateOrientation();
 	}
-
 }
