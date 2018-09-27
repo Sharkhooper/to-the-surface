@@ -73,7 +73,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 	public bool PauseMenuActive()
 	{
-		
+        return inLevel; 
 	}
 	
 	public void LoadLevel(int lvl)			//lädt das ausgewählte lvl abhängig seiner Nummer
