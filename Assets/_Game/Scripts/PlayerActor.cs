@@ -16,7 +16,7 @@ public class PlayerActor : MonoBehaviour {
 	private const float CONCAVE_ANIMATION_TIME = 1.0f / Mathf.PI;
 	private const float CONVEX_ANIMATION_TIME = 3.0f / 16.0f * Mathf.PI;
 
-	private bool isMoving;
+	private Coroutine movementRoutine;
 
 	private enum MovementDirection {
 		Left = -1,
@@ -46,19 +46,16 @@ public class PlayerActor : MonoBehaviour {
 	}
 
 	private void Update() {
-		animator.SetBool("isRunning", isMoving);
-		if (isMoving) return;
+		animator.SetBool("isRunning", movementRoutine != null);
+		if (movementRoutine != null) return;
 
 		transform.position = tilemap.GetCellCenterWorld(tilemap.WorldToCell(transform.position));
 
-		float direction = inputProvider.MoveDirection.x;
-
-		if (direction < 0) {
-			StartCoroutine(Move(MovementDirection.Left));
-		} else if (direction > 0) {
-			StartCoroutine(Move(MovementDirection.Right));
-		} else if (inputProvider.JumpPressed) {
-			StartCoroutine(Jump());
+		IEnumerator movement = GetMovementOperation();
+		if (movement != null) {
+			movementRoutine = StartCoroutine(movement);
+		} else {
+			movementRoutine = null;
 		}
 
 		animator.SetBool("isPeeking", inputProvider.PeekingPressed);
@@ -71,6 +68,20 @@ public class PlayerActor : MonoBehaviour {
 
 	private void UpdateOrientation() {
 		transform.rotation = GetRotation(orientation, facing);
+	}
+
+	private IEnumerator GetMovementOperation() {
+		float direction = inputProvider.MoveDirection.x;
+
+		if (direction < 0) {
+			return Move(MovementDirection.Left);
+		} else if (direction > 0) {
+			return Move(MovementDirection.Right);
+		} else if (inputProvider.JumpPressed) {
+			return Jump();
+		} else {
+			return null;
+		}
 	}
 
 	private static Quaternion GetRotation(Orientation orientation, MovementDirection facing) {
@@ -105,8 +116,6 @@ public class PlayerActor : MonoBehaviour {
 	}
 
 	private IEnumerator Move(MovementDirection direction) {
-		isMoving = true;
-
 		List<IEnumerator> route = new List<IEnumerator>();
 
 		Orientation o = orientation;
@@ -232,11 +241,15 @@ public class PlayerActor : MonoBehaviour {
 			}
 		}
 
-		isMoving = false;
+		IEnumerator movement = GetMovementOperation();
+		if (movement != null) {
+			movementRoutine = StartCoroutine(movement);
+		} else {
+			movementRoutine = null;
+		}
 	}
 
 	private IEnumerator Jump() {
-		isMoving = true;
 		Vector3Int celllPos = tilemap.WorldToCell(transform.position);
 		Vector3Int direction = GetDirectionVector(orientation);
 		RotatedTile tile = null;
@@ -267,6 +280,7 @@ public class PlayerActor : MonoBehaviour {
 			switch (action) {
 				case OnLandAction.None:
 					transform.position = tilemap.GetCellCenterWorld(celllPos - direction);
+					movementRoutine = null;
 					break;
 
 				case OnLandAction.MoveConcaveLeft:
@@ -303,8 +317,6 @@ public class PlayerActor : MonoBehaviour {
 					throw new ArgumentOutOfRangeException();
 			}
 		}
-
-		isMoving = false;
 	}
 
 	private IEnumerator Move(Orientation direction, float distance, float time) {
