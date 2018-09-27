@@ -12,11 +12,10 @@ public class InteractibleTrigger : MonoBehaviour, IInteractible {
 	private PlayerActor player;
 
 	private void OnTriggerEnter2D(Collider2D other) {
-		if (other.CompareTag("Player")) {
-			player = other.GetComponent<PlayerActor>();
-			if(player != null) {
-				player.Interactible = this;
-			}
+		player = other.GetComponent<PlayerActor>();
+		if(player != null) {
+			Debug.Log("Test");
+			player.Interactible = this;
 		}
 	}
 
