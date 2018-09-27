@@ -18,6 +18,14 @@ public class PlayerActor : MonoBehaviour {
 
 	private Coroutine movementRoutine;
 
+	private Vector3 startingPosition;
+
+	private Orientation startingOrientation;
+
+	public IInteractible Interactible { get; set; }
+
+	public Orientation Orientation => orientation;
+
 	private enum MovementDirection {
 		Left = -1,
 		Right = 1
@@ -40,6 +48,9 @@ public class PlayerActor : MonoBehaviour {
 	private void Start() {
 		Cinemachine.CinemachineVirtualCamera cam = Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>();
 
+		startingPosition = transform.position;
+		startingOrientation = orientation;
+		
 		if (cam != null) {
 			cam.Follow = trackingPoint.transform;
 		}
@@ -50,6 +61,10 @@ public class PlayerActor : MonoBehaviour {
 		if (movementRoutine != null) return;
 
 		transform.position = tilemap.GetCellCenterWorld(tilemap.WorldToCell(transform.position));
+
+		if (inputProvider.InteractionPressed && Interactible != null) {
+			Interactible.Interact();
+		}
 
 		IEnumerator movement = GetMovementOperation();
 		if (movement != null) {
@@ -360,4 +375,14 @@ public class PlayerActor : MonoBehaviour {
 		orientation = target;
 		UpdateOrientation();
 	}
+
+	private void Die()
+	{
+		transform.position = startingPosition;
+
+		orientation = startingOrientation;
+		
+		UpdateOrientation();
+	}
+
 }

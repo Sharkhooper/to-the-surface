@@ -5,4 +5,5 @@ public abstract class InputProvider : ScriptableObject {
 
 	public abstract bool JumpPressed { get; }
 	public abstract bool PeekingPressed { get; }
+	public abstract bool InteractionPressed { get; }
 }
