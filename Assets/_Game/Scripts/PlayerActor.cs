@@ -44,6 +44,7 @@ public class PlayerActor : MonoBehaviour {
 	}
 
 	private void Update() {
+		animator.SetBool("isRunning", isMoving);
 		if (isMoving) return;
 
 		transform.position = tilemap.GetCellCenterWorld(tilemap.WorldToCell(transform.position));
