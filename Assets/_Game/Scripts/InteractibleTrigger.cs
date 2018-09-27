@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 public class InteractibleTrigger : MonoBehaviour, IInteractible {
@@ -29,9 +27,5 @@ public class InteractibleTrigger : MonoBehaviour, IInteractible {
 		if (player.Orientation == orientation) {
 			onInteract.Invoke();
 		}
-	}
-
-	public void Test() {
-		Debug.Log("Test");
 	}
 }

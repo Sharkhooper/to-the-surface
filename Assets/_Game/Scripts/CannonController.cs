@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class CannonController : MonoBehaviour
-{
+public class CannonController : MonoBehaviour {
 	public GameObject cannonBarrel;
 	public GameObject fire;
 	private GameObject currentFire;
@@ -12,21 +9,16 @@ public class CannonController : MonoBehaviour
 	[SerializeField] private float shotsPerSeconds;
 	[SerializeField] private float speed = 10f;
 	[SerializeField] private Animator anim;
-	
-	void FixedUpdate ()
-	{
-		if (cooldown <= 0)
-		{
+
+	void FixedUpdate() {
+		if (cooldown <= 0) {
 			anim.SetTrigger("Fire");
-		}
-		else
-		{
+		} else {
 			cooldown = Mathf.Max(0, cooldown - Time.deltaTime);
 		}
 	}
 
-	public void Fire()
-	{
+	public void Fire() {
 		currentFire = Instantiate(fire, cannonBarrel.transform.position, cannonBarrel.transform.rotation);
 		cooldown = 1f / (shotsPerSeconds);
 		// Drehung

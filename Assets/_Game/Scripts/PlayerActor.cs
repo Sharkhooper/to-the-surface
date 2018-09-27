@@ -83,7 +83,6 @@ public class PlayerActor : MonoBehaviour {
 
 	private void OnTriggerEnter2D(Collider2D other) {
 		// Collides with Hazard
-		Debug.Log(other.gameObject.layer);
 		if (other.gameObject.layer == 11) {
 			Die();
 		}
