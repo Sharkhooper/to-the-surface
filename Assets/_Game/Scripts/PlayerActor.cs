@@ -58,6 +58,14 @@ public class PlayerActor : MonoBehaviour {
 
 	private void Update() {
 		animator.SetBool("isRunning", movementRoutine != null);
+		if (inputProvider.PeekingPressed && movementRoutine == null) {
+			trackingPoint.transform.localPosition = Vector3.up * peekingDistance;
+			animator.SetBool("isPeeking", true);
+		} else {
+			trackingPoint.transform.localPosition = Vector3.zero;
+			animator.SetBool("isPeeking", false);
+		}
+
 		if (movementRoutine != null) return;
 
 		transform.position = tilemap.GetCellCenterWorld(tilemap.WorldToCell(transform.position));
@@ -71,13 +79,6 @@ public class PlayerActor : MonoBehaviour {
 			movementRoutine = StartCoroutine(movement);
 		} else {
 			movementRoutine = null;
-		}
-
-		animator.SetBool("isPeeking", inputProvider.PeekingPressed);
-		if (inputProvider.PeekingPressed) {
-			trackingPoint.transform.localPosition = Vector3.up * peekingDistance;
-		} else {
-			trackingPoint.transform.localPosition = Vector3.zero;
 		}
 	}
 
@@ -210,7 +211,6 @@ public class PlayerActor : MonoBehaviour {
 								break;
 
 							case OnWalkOverAction.MoveConvex:
-								// TODO: Add animation
 								cellPos += directionVec * 2 + downVec;
 								o = o.GetLeft();
 								route.Add(Rotate(directionOrientation, directionOrientation.GetLeft(), o, CONVEX_RADIUS, CONVEX_ANIMATION_TIME));
@@ -389,6 +389,12 @@ public class PlayerActor : MonoBehaviour {
 			StopCoroutine(movementRoutine);
 			movementRoutine = null;
 		}
+
+		animator.SetBool("isFalling", false);
+		animator.SetBool("isRunning", false);
+		animator.SetBool("isPeeking", false);
+		animator.SetBool("shouldSlide", false);
+		animator.Play("Idle");
 
 		transform.position = startingPosition;
 
