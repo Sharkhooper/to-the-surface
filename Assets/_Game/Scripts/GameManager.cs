@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Soraphis;
 using UnityEditor;
@@ -16,11 +17,13 @@ public class GameManager : SingletonBehaviour<GameManager>
 	
 	private int currentLevel = 1; //Current level number, expressed in game as "Day 1".
 	public int HighestLevel { get; private set; }
-	private int lastLevel;		//Die Anzahl aller exestierenden Level (Maximale ANzahl Level im Speil)
+	public int LastLevel{ get; private set; }	//Die Anzahl aller existierenden Level (Maximale Anzahl Level im Spiel)
 
 
 	private GameObject PauseMenu =null ;		//Damit wird das PauseMenu gespeichert
-	public bool inLevel = false;
+	public bool inLevel { get; set; }
+	
+	
 	
 
 	private LoadSave ls = new LoadSave();
@@ -30,9 +33,10 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 	private void Awake()
 	{
+		inLevel = false;
 		HighestLevel = 1;
 		
-		lastLevel = SceneManager.sceneCountInBuildSettings-2;
+		LastLevel = SceneManager.sceneCountInBuildSettings-1;
 
 
 		if (ls.DoesSaveFileExist())
@@ -46,35 +50,9 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 	}
 
-	void Update()
-	{
-		/*
-		if (inLevel)
-		{
-			Debug.Log("In Level");
-			if (Input.GetKeyDown(KeyCode.Escape))
-			{
-				Debug.Log("Escape");
-				if( !(PauseMenu.activeSelf))
-				{
-					PauseLevel();
-				}
-				else
-				{
-					ContinueLevel();
-				}
-			}
-			Debug.Log("InLevel= " + inLevel);
-		}
-		*/
-	}
+	
 
 	//	Update nicht benötigt da alle veränderungen über Methodenaufrufe laufen
-
-	public bool PauseMenuActive()
-	{
-        return inLevel; 
-	}
 	
 	public void LoadLevel(int lvl)			//lädt das ausgewählte lvl abhängig seiner Nummer
 	{
@@ -91,30 +69,23 @@ public class GameManager : SingletonBehaviour<GameManager>
 		inLevel = true;
 		SceneManager.LoadScene(load,LoadSceneMode.Single);
 		
-		
+		Time.timeScale = 1.0f;
 	}
 
 	public void ContinueGame() //Continue im Hauptmenu
 	{
-
 		LoadLevel(currentLevel);
-
 	}
-
-
 	
-
-
 	public void CloseGame()		// beendet das Spiel
 	{
 		Application.Quit();
-		
 	}
 
 
 	public void LevelFinished()		// wenn man ein Level beendet hat
 	{
-		if(currentLevel<lastLevel)
+		if(currentLevel<LastLevel)
 		currentLevel++;
 
 		if (currentLevel > HighestLevel)
@@ -124,14 +95,11 @@ public class GameManager : SingletonBehaviour<GameManager>
 		ls.Safe(currentLevel,tmp);
 		
 		LoadLevel(currentLevel);
-
 	}
-
 
 	public void ResetLevel()		// Neustarte bzw. neu lade das Leven/ die scene
 	{
 		LoadLevel(currentLevel);
-		
 	}
 
 	public void PauseLevel()		// pausiert das lvl indem das Gameobject PauseMenu aktiv wird
@@ -143,34 +111,35 @@ public class GameManager : SingletonBehaviour<GameManager>
 		
 		Time.timeScale = 0.0f;
 		PauseMenu.SetActive(true);
-		
-		
-		
+	}
+
+	public bool PauseMenuActive()
+	{
+		if (PauseMenu != null)
+		{
+			return PauseMenu.activeSelf;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	public void ContinueLevel()		// weiter button im PauseMenu ; Pause Menu wird inaktiv
 	{
 		Time.timeScale = 1.0f;
 		PauseMenu.SetActive(false);
-
 	}
 
 	public void GoMainMenu()		// Das Lvl wird beendet und man geht ins Hauptmenu
 	{
-		
-		
-		
 		Destroy(PauseMenu);			// Da im hauptmenu kein PauseMenu gebraucht wird wird es zerstört und wieder erstellt wenn man ein lvl startet
 		PauseMenu = null;
 
-
-
 		inLevel = false;
+		
+		
 		SceneManager.LoadScene("MainMenu",LoadSceneMode.Single);		// aufruf des Mainmenu
-		
-		
-		
-		
 	}
 
 	public void ResetProgress()		// Man löscht seinen gesamten Fortschritt und hat wieder keine Lvl freigeschaltet
@@ -180,6 +149,8 @@ public class GameManager : SingletonBehaviour<GameManager>
 
 	}
 
+	
+	
 	
 
 

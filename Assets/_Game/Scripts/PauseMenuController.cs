@@ -5,28 +5,16 @@ using UnityEngine.Networking;
 
 public class PauseMenuController : MonoBehaviour
 {
-
-	// Use this for initialization
-
-
-
-
 	private GameManager gm;
-
 
 	private void Start()
 	{
-
-		gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-
+		gm = GameManager.Instance;
 	}
-
-
 
 	public void GoMainMenu()
 	{
 		gm.GoMainMenu();
-		
 	}
 
 	public void ContinueLevel()

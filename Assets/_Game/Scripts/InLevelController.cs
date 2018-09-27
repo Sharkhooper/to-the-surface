@@ -16,8 +16,7 @@ public class InLevelController : MonoBehaviour {
 	{
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
-			Debug.Log("Escape");
-			if( !(gm.PauseMenuActive()))
+			if (!gm.PauseMenuActive())
 			{
 				gm.PauseLevel();
 			}

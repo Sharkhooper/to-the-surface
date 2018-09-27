@@ -12,7 +12,7 @@ public class LevelSelectController : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+		gm = GameManager.Instance;
 		ActivateAllPages();
 		UpdateLevelSelect();
 		DisablePagesAfterFirst();
@@ -21,22 +21,45 @@ public class LevelSelectController : MonoBehaviour
 	// Locks all currently not unlocked levels
 	public void UpdateLevelSelect()
 	{
-		int highestLevel = gm.HighestLevel;
+		if(gm == null)
+			gm = GameManager.Instance;
+		int highestLevel = 5;
+			//gm.HighestLevel;
+		int lastLevel = gm.LastLevel;
 		
-		//Static implementation for last level
-		for (int i = highestLevel+1; i <= 18; i++)
+		for (int i = 1; i <= 18; i++)
 		{
 			String buttonName = "ButtonLevel" + i;
 			if (GameObject.Find(buttonName) != null)
 			{
 				GameObject button = GameObject.Find(buttonName);
 				Image image = button.transform.Find("Image").GetComponent<Image>();
-				image.sprite = Resources.Load("lockedTEMP", typeof(Sprite)) as Sprite;
-				button.GetComponent<Button>().interactable = false;
-			}
-			else
-			{
-				Debug.Log("Button not found");
+				// Level unlocked
+				if (i <= highestLevel)
+				{
+					String loadStr = i < 10 ? "LevelSelect/Level0" + i : "LevelSelect/Level" + i;
+					image.sprite = Resources.Load(loadStr, typeof(Sprite)) as Sprite;
+					button.GetComponent<Button>().interactable = true;
+				}
+				// Level locked
+				else if (i <= lastLevel)
+				{
+					image.sprite = Resources.Load("LevelSelect/lockedTEMP", typeof(Sprite)) as Sprite;
+					button.GetComponent<Button>().interactable = false;
+				}
+				// Level doesn't exist
+				else
+				{
+					button.SetActive(false);
+					
+					// Deactivates NextPageButton because there isnt' a next page
+					GameObject nextPage = button.transform.parent.Find("ButtonNextPage").gameObject;
+					nextPage.SetActive(false);
+					
+					// Next page can't be opened so buttons on it don't have to be changed
+					if (i % 6 == 0)
+						return;
+				}
 			}
 		}
 	}
@@ -61,5 +84,17 @@ public class LevelSelectController : MonoBehaviour
 		{
 			page.SetActive(true);
 		}
+	}
+
+	public void LoadLevel(int level)
+	{
+		gm.LoadLevel(level);
+	}
+
+	public void OpenLevelSelect()
+	{
+		ActivateAllPages();
+		UpdateLevelSelect();
+		DisablePagesAfterFirst();
 	}
 }
