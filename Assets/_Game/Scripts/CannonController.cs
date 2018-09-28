@@ -1,37 +1,33 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class CannonController : MonoBehaviour
-{
-	public GameObject cannonBarrel;
-	public GameObject fire;
-	private GameObject currentFire;
-	private float cooldown;
-
+public class CannonController : MonoBehaviour {
+	[SerializeField] private GameObject cannonBarrel;
+	[SerializeField] private GameObject fire;
 	[SerializeField] private float shotsPerSeconds;
 	[SerializeField] private float speed = 10f;
 	[SerializeField] private Animator anim;
-	
-	void FixedUpdate ()
-	{
-		if (cooldown <= 0)
-		{
+	[SerializeField] private Animator animRadVorne;
+	[SerializeField] private Animator animRadHinten;
+
+	private float cooldown;
+
+	private void FixedUpdate () {
+		if (cooldown <= 0) {
 			anim.SetTrigger("Fire");
-		}
-		else
-		{
+			animRadVorne.SetTrigger("Fire");
+			animRadHinten.SetTrigger("Fire");
+		} else {
 			cooldown = Mathf.Max(0, cooldown - Time.deltaTime);
 		}
 	}
 
-	public void Fire()
-	{
-		currentFire = Instantiate(fire, cannonBarrel.transform.position, cannonBarrel.transform.rotation);
+	public void Fire() {
+		GameObject obj = Instantiate(fire, cannonBarrel.transform.Find("FirePoint").position, cannonBarrel.transform.rotation);
 		cooldown = 1f / (shotsPerSeconds);
 		// Drehung
-		currentFire.transform.rotation = Quaternion.Euler(0, 0, 90) * cannonBarrel.transform.rotation;
+		obj.transform.rotation = Quaternion.Euler(0, 0, 90) * cannonBarrel.transform.rotation;
+		obj.transform.localScale = transform.lossyScale;
 		// Flugrichtung
-		currentFire.GetComponent<Rigidbody>().velocity = cannonBarrel.transform.right * speed;
+		obj.GetComponent<Rigidbody2D>().velocity = cannonBarrel.transform.right * speed;
 	}
 }

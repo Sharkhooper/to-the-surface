@@ -1,26 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class ProjektilController : MonoBehaviour
-{
-	private void OnTriggerEnter2D(Collider2D other)
-	{
-		Debug.Log(other.name);
-		if (other.gameObject.name != "Cannon" || other.gameObject.name != "CannonBarrel")
-		{
-			
-		}
-		else
-		{
+public class ProjektilController : MonoBehaviour {
+
+	private const float MAX_LIFETIME = 15.0f;
+
+	private float lifetime;
+
+	private void Update() {
+		if (lifetime > MAX_LIFETIME) {
 			Destroy(gameObject);
-			PlayerActor player = other.GetComponent<PlayerActor>();
-			if (player != null)
-				player.Die(); 
 		}
+
+		lifetime += Time.deltaTime;
 	}
-	
-	void OnBecameInvisible() {
+
+	private void OnTriggerEnter2D(Collider2D other) {
 		Destroy(gameObject);
 	}
 }

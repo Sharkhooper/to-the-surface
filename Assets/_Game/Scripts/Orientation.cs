@@ -26,7 +26,7 @@ public static class OrientationExtensions {
 	public static Orientation RotateClockwise(this Orientation orientation, int i) {
 		return (Orientation) Mod((int) orientation + i, 4);
 	}
-	
+
 	public static Orientation GetRight(this Orientation orientation) {
 		return orientation.RotateClockwise(1);
 	}

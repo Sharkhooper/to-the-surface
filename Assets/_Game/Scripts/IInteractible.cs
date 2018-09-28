@@ -1,3 +1,5 @@
-﻿public interface IInteractible {
-	void Interact();
+﻿using UnityEngine.EventSystems;
+
+public interface IInteractible : IEventSystemHandler{
+	void Interact(PlayerActor source);
 }
