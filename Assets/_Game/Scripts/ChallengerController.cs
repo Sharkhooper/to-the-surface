@@ -7,8 +7,7 @@ public class ChallengerController : MonoBehaviour, IResetable {
 
 	private readonly Queue<Location> queue = new Queue<Location>();
 
-	[SerializeField] private Collider2D col;
-	[SerializeField] private SpriteRenderer render;
+	[SerializeField] private GameObject child;
 
 	private int objectsInQueueBuffer;
 
@@ -24,8 +23,7 @@ public class ChallengerController : MonoBehaviour, IResetable {
 
 		objectsInQueueBuffer = Mathf.CeilToInt(waitTime / Time.fixedDeltaTime);
 
-		col.enabled = false;
-		render.enabled = false;
+		ResetToLevelBegin();
 	}
 
 	private void FixedUpdate() {
@@ -34,8 +32,8 @@ public class ChallengerController : MonoBehaviour, IResetable {
 			rotation = player.transform.rotation
 		});
 
-		col.enabled = IsActive;
-		render.enabled = IsActive;
+		child.SetActive(IsActive);
+
 		if (IsActive) {
 			Location l = queue.Dequeue();
 			transform.position = l.position;
@@ -46,7 +44,6 @@ public class ChallengerController : MonoBehaviour, IResetable {
 
 	public void ResetToLevelBegin() {
 		queue.Clear();
-		col.enabled = false;
-		render.enabled = false;
+		child.SetActive(false);
 	}
 }
