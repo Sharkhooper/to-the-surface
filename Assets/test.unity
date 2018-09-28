@@ -881,6 +881,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114937677688931238, guid: e112e2adb96c64343a9029d0b7e7d41d,
+        type: 2}
+      propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4582096887134084, guid: e112e2adb96c64343a9029d0b7e7d41d, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0.5
@@ -926,6 +931,26 @@ Prefab:
     - target: {fileID: 4582096887134084, guid: e112e2adb96c64343a9029d0b7e7d41d, type: 2}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 114937677688931238, guid: e112e2adb96c64343a9029d0b7e7d41d,
+        type: 2}
+      propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114937677688931238, guid: e112e2adb96c64343a9029d0b7e7d41d,
+        type: 2}
+      propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114937677688931238, guid: e112e2adb96c64343a9029d0b7e7d41d,
+        type: 2}
+      propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 114937677688931238, guid: e112e2adb96c64343a9029d0b7e7d41d,
+        type: 2}
+      propertyPath: onInteract.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e112e2adb96c64343a9029d0b7e7d41d, type: 2}
