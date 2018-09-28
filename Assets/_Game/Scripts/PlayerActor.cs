@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
+using NaughtyAttributes;
 
 public class PlayerActor : MonoBehaviour, IResetable {
 	private const int MAX_STEPS = 128;
@@ -97,6 +98,7 @@ public class PlayerActor : MonoBehaviour, IResetable {
 		}
 	}
 
+    [Button]
 	private void UpdateOrientation() {
 		transform.rotation = GetRotation(orientation, facing);
 	}

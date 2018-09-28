@@ -8,8 +8,14 @@ public class CannonController : MonoBehaviour, IResetable {
 	[SerializeField] private Animator anim;
 	[SerializeField] private Animator animRadVorne;
 	[SerializeField] private Animator animRadHinten;
+    [SerializeField] private float startAfterTime;
 
-	private float cooldown;
+    private float cooldown;
+
+    void Awake()
+    {
+        cooldown = startAfterTime;
+    }
 
 	private void FixedUpdate () {
 		if (cooldown <= 0) {
@@ -32,6 +38,6 @@ public class CannonController : MonoBehaviour, IResetable {
 	}
 
 	public void ResetToLevelBegin() {
-		cooldown = 0;
+		cooldown = startAfterTime;
 	}
 }
