@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using NaughtyAttributes;
 
 public class LaserController : MonoBehaviour {
 
@@ -23,4 +24,13 @@ public class LaserController : MonoBehaviour {
 			c.enabled = value;
 		}
 	}
+
+    [Button]
+    public void ToggleState() {
+        if (laserRenderer[0] == null) return;
+
+        bool state = laserRenderer[0].enabled;
+
+        SetState(!state);
+    }
 }

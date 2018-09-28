@@ -23,11 +23,6 @@ public class InteractibleLever : MonoBehaviour, IInteractible, IResetable {
 		ResetToLevelBegin();
 	}
 
-    private void Start() {
-        onInteract.Invoke(state);
-        onInteractInversed.Invoke(!state);
-    }
-
     public void Interact(PlayerActor source) {
 		if (source.Orientation == orientation) {
 			state = !state;
@@ -45,6 +40,6 @@ public class InteractibleLever : MonoBehaviour, IInteractible, IResetable {
 	public void ResetToLevelBegin() {
 		state = isActive;
 		UpdateSprite();
-		onInteract.Invoke(isActive);
+
 	}
 }
