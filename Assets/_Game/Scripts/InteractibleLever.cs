@@ -16,6 +16,7 @@ public class InteractibleLever : MonoBehaviour, IInteractible {
 	[SerializeField] private Sprite inactive;
 
 	[SerializeField] private BoolEvent onInteract;
+	[SerializeField] private BoolEvent onInteractInversed;
 
 	private bool state;
 
@@ -24,10 +25,16 @@ public class InteractibleLever : MonoBehaviour, IInteractible {
 		UpdateSprite();
 	}
 
-	public void Interact(PlayerActor source) {
+    private void Start() {
+        onInteract.Invoke(state);
+        onInteractInversed.Invoke(!state);
+    }
+
+    public void Interact(PlayerActor source) {
 		if (source.Orientation == orientation) {
 			state = !state;
 			onInteract.Invoke(state);
+            onInteractInversed.Invoke(!state);
 
 			UpdateSprite();
 		}
