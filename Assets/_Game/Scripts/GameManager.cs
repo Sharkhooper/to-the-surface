@@ -77,9 +77,8 @@ public class GameManager : SingletonBehaviour<GameManager> {
 			HighestLevel++;
 		}
 
-		int tmp = HighestLevel;
-		bool tmpCh = IsChallengerModeEnabled;
-		LoadSave.Save(currentLevel, tmp, tmpCh);
+		
+		SaveData();
 
 		LoadLevel(currentLevel);
 	}
@@ -133,8 +132,17 @@ public class GameManager : SingletonBehaviour<GameManager> {
 	public void ResetProgress() {
 		currentLevel = 1;
 		HighestLevel = 1;
+		SaveData();
+	}
+
+
+	public void SaveData()
+	{
 		int highestLevel = HighestLevel;
 		bool challengerEnabled = IsChallengerModeEnabled;
 		LoadSave.Save(currentLevel, highestLevel, challengerEnabled);
+		
+		
 	}
+
 }

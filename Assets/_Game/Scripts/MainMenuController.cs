@@ -1,8 +1,24 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
-public class MainMenuController : MonoBehaviour {
+public class MainMenuController : MonoBehaviour
+{
+
+	[SerializeField] private Toggle modeBool;
+	
+	
 	private void Awake() {
 		GameManager.Instance.IsInLevel = false;
+	}
+
+
+	private void Start()
+	{
+
+		
+		modeBool.isOn=GameManager.Instance.IsChallengerModeEnabled;
+
+
 	}
 
 	public void Play() {
@@ -29,6 +45,13 @@ public class MainMenuController : MonoBehaviour {
 	public void SetChallengerOff()
 	{
 		GameManager.Instance.IsChallengerModeEnabled = false;
+		
+	}
+
+	public void ToggleChallenger()
+	{
+		GameManager.Instance.IsChallengerModeEnabled = modeBool.isOn;
+		GameManager.Instance.SaveData();
 	}
 
 }

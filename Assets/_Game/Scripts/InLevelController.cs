@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class InLevelController : MonoBehaviour {
 	private void Start() {
@@ -18,6 +19,18 @@ public class InLevelController : MonoBehaviour {
 	}
 
 	public void LevelFinished() {
+		StartCoroutine(LevelEndRoutine());
+	}
+
+	private IEnumerator LevelEndRoutine() {
+		PlayerActor player = FindObjectOfType<PlayerActor>();
+		Animator anim = player.GetComponent<Animator>();
+		anim.Play("LevelEnd");
+		player.GetComponent<Collider2D>().enabled = false;
+		player.enabled = false;
+
+		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+
 		GameManager.Instance.LevelFinished();
 	}
 }

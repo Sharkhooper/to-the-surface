@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class CannonController : MonoBehaviour {
+public class CannonController : MonoBehaviour, IResetable {
 	[SerializeField] private GameObject cannonBarrel;
 	[SerializeField] private GameObject fire;
 	[SerializeField] private float shotsPerSeconds;
@@ -29,5 +29,9 @@ public class CannonController : MonoBehaviour {
 		obj.transform.localScale = transform.lossyScale;
 		// Flugrichtung
 		obj.GetComponent<Rigidbody2D>().velocity = cannonBarrel.transform.right * speed;
+	}
+
+	public void ResetToLevelBegin() {
+		cooldown = 0;
 	}
 }

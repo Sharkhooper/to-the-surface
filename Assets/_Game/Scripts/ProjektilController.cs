@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ProjektilController : MonoBehaviour {
+public class ProjektilController : MonoBehaviour, IResetable {
 
 	private const float MAX_LIFETIME = 15.0f;
 
@@ -15,6 +15,10 @@ public class ProjektilController : MonoBehaviour {
 	}
 
 	private void OnTriggerEnter2D(Collider2D other) {
+		Destroy(gameObject);
+	}
+
+	public void ResetToLevelBegin() {
 		Destroy(gameObject);
 	}
 }
