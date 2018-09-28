@@ -12,12 +12,17 @@ public class CannonController : MonoBehaviour
 	[SerializeField] private float shotsPerSeconds;
 	[SerializeField] private float speed = 10f;
 	[SerializeField] private Animator anim;
+	[SerializeField] private Animator animRadVorne;
+	[SerializeField] private Animator animRadHinten;
 	
 	void FixedUpdate ()
 	{
 		if (cooldown <= 0)
 		{
 			anim.SetTrigger("Fire");
+			animRadVorne.SetTrigger("Fire");
+			animRadHinten.SetTrigger("Fire");
+			
 		}
 		else
 		{
@@ -27,7 +32,7 @@ public class CannonController : MonoBehaviour
 
 	public void Fire()
 	{
-		currentFire = Instantiate(fire, cannonBarrel.transform.position, cannonBarrel.transform.rotation);
+		currentFire = Instantiate(fire, cannonBarrel.transform.Find("FirePoint").position, cannonBarrel.transform.rotation);
 		cooldown = 1f / (shotsPerSeconds);
 		// Drehung
 		currentFire.transform.rotation = Quaternion.Euler(0, 0, 90) * cannonBarrel.transform.rotation;
