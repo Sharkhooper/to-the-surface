@@ -36,8 +36,13 @@ public class LevelSelectController : MonoBehaviour {
 					button.SetActive(false);
 
 					// Deactivates NextPageButton because there isnt' a next page
-					GameObject nextPage = button.transform.parent.Find("ButtonNextPage").gameObject;
-					nextPage.SetActive(false);
+					if (button.transform.parent.Find("ButtonNextPage") != null)
+					{
+
+						GameObject nextPage = button.transform.parent.Find("ButtonNextPage").gameObject;
+						
+						nextPage.SetActive(false);
+					}
 
 					// Next page can't be opened so buttons on it don't have to be changed
 					if (i % 6 == 0)

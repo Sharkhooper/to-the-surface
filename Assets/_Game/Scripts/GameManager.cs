@@ -19,7 +19,7 @@ public class GameManager : SingletonBehaviour<GameManager> {
 	public bool IsChallengerModeEnabled { get; set; }
 
 	private void Awake() {
-		IsChallengerModeEnabled = true;
+		IsChallengerModeEnabled = false;
 		IsInLevel = false;
 		HighestLevel = 1;
 
