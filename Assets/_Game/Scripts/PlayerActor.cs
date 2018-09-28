@@ -348,7 +348,7 @@ public class PlayerActor : MonoBehaviour {
 					throw new ArgumentOutOfRangeException();
 			}
 		} else {
-			animator.Play("HeadShake");
+			animator.Play("PeekingStatic");
 		}
 	}
 
