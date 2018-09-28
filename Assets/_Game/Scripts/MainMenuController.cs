@@ -20,4 +20,15 @@ public class MainMenuController : MonoBehaviour {
 	public void ResetProgress() {
 		GameManager.Instance.ResetProgress();
 	}
+
+	public void SetChallengerOn()
+	{
+		GameManager.Instance.IsChallengerModeEnabled = true;
+	}
+
+	public void SetChallengerOff()
+	{
+		GameManager.Instance.IsChallengerModeEnabled = false;
+	}
+
 }
