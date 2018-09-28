@@ -1,0 +1,618 @@
+fileFormatVersion: 2
+guid: 8bf6d380d1a5e664ea2336072d30002a
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Bodyparts_0
+    21300002: Bodyparts_1
+    21300004: Bodyparts_2
+    21300006: Bodyparts_3
+    21300008: Bodyparts_4
+    21300010: Bodyparts_5
+    21300012: Bodyparts_6
+    21300014: Bodyparts_7
+    21300016: Bodyparts_8
+    21300018: Bodyparts_9
+    21300020: Bodyparts_10
+    21300022: Bodyparts_11
+    21300024: Bodyparts_12
+    21300026: Bodyparts_13
+    21300028: Bodyparts_14
+  externalObjects: {}
+  serializedVersion: 7
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Bodyparts_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 847
+        width: 62
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -24, y: 24.5}
+        - {x: -31, y: 13.5}
+        - {x: -31, y: -24.5}
+        - {x: -7, y: -24.5}
+        - {x: 31, y: 10.5}
+        - {x: 31, y: 24.5}
+      physicsShape:
+      - - {x: -27, y: 24.5}
+        - {x: -31, y: 9.5}
+        - {x: -31, y: -24.5}
+        - {x: -8, y: -24.5}
+        - {x: 31, y: 14.5}
+        - {x: 31, y: 24.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c7260f263eae48489160acea7a2af27
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bodyparts_1
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 776
+        width: 47
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 1.5, y: 30.5}
+        - {x: -19.5, y: 1.5}
+        - {x: -23.5, y: -30.5}
+        - {x: -6.5, y: -30.5}
+        - {x: 23.5, y: 21.5}
+        - {x: 23.5, y: 29.5}
+        - {x: 21.5, y: 30.5}
+      physicsShape:
+      - - {x: 1.5, y: 30.5}
+        - {x: -18.5, y: 1.5}
+        - {x: -23.5, y: -15.5}
+        - {x: -23.5, y: -29.5}
+        - {x: -21.5, y: -30.5}
+        - {x: -5.5, y: -30.5}
+        - {x: 23.5, y: 22.5}
+        - {x: 23.5, y: 29.5}
+        - {x: 19.5, y: 30.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27eaff0fc798b6748bb237e08506843a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bodyparts_2
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 711
+        width: 51
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 23.5, y: 32}
+        - {x: -25.5, y: 32}
+        - {x: -25.5, y: -17}
+        - {x: -6.5, y: -32}
+        - {x: 4.5, y: -32}
+        - {x: 24.5, y: -6}
+        - {x: 25.5, y: 1}
+        - {x: 25.5, y: 31}
+      physicsShape:
+      - - {x: -20.5, y: 32}
+        - {x: -25.5, y: 31}
+        - {x: -25.5, y: -16}
+        - {x: -9.5, y: -31}
+        - {x: 7.5, y: -31}
+        - {x: 25.5, y: -6}
+        - {x: 25.5, y: 30}
+        - {x: 21.5, y: 32}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 952bf995e44612a4eb7b1831eb7bfd36
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bodyparts_3
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 650
+        width: 61
+        height: 54
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 20.5, y: 27}
+        - {x: 1.5, y: 27}
+        - {x: -27.5, y: -6}
+        - {x: -30.5, y: -24}
+        - {x: -26.5, y: -27}
+        - {x: 4.5, y: -27}
+        - {x: 30.5, y: -5}
+        - {x: 30.5, y: 16}
+        - {x: 26.5, y: 20}
+      physicsShape:
+      - - {x: -4.5, y: 27}
+        - {x: -30.5, y: -4}
+        - {x: -30.5, y: -26}
+        - {x: -29.5, y: -27}
+        - {x: 9.5, y: -27}
+        - {x: 30.5, y: -6}
+        - {x: 30.5, y: 27}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f43eb31ef4357d4a8507bb7f10e9dc7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bodyparts_4
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 582
+        width: 55
+        height: 56
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -13.5, y: 28}
+        - {x: -20.5, y: 27}
+        - {x: -27.5, y: 21}
+        - {x: -27.5, y: -28}
+        - {x: 13.5, y: -28}
+        - {x: 27.5, y: -22}
+        - {x: 27.5, y: 21}
+        - {x: 21.5, y: 28}
+      - - {x: 10.5, y: 18}
+        - {x: 9.5, y: 18}
+        - {x: 7.5, y: 15}
+      physicsShape:
+      - - {x: 20.5, y: -7}
+        - {x: 24.5, y: -2}
+        - {x: 27.5, y: 10}
+        - {x: 27.5, y: 16}
+        - {x: 22.5, y: 23}
+        - {x: 17.5, y: 24}
+        - {x: 11.5, y: 18}
+        - {x: 14.5, y: 25}
+        - {x: 15.5, y: 28}
+        - {x: -21.5, y: 28}
+        - {x: -27.5, y: 16}
+        - {x: -27.5, y: -25}
+        - {x: -21.5, y: -28}
+        - {x: 5.5, y: -28}
+        - {x: 22.5, y: -21}
+        - {x: 27.5, y: -17}
+        - {x: 27.5, y: -4}
+        - {x: 22.5, y: -5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76ed6289decbceb44a47bac30083bed2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bodyparts_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 517
+        width: 63
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -31.5, y: 31.5}
+        - {x: -31.5, y: -31.5}
+        - {x: 1.5, y: -31.5}
+        - {x: 31.5, y: -6.5}
+        - {x: 31.5, y: 28.5}
+        - {x: 30.5, y: 31.5}
+      physicsShape:
+      - - {x: -30.5, y: 31.5}
+        - {x: -30.5, y: -31.5}
+        - {x: -2.5, y: -31.5}
+        - {x: 31.5, y: 1.5}
+        - {x: 31.5, y: 21.5}
+        - {x: 14.5, y: 31.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 396a4b83122d993499279946ee8f520e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bodyparts_6
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 451
+        width: 60
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 30, y: -25}
+        - {x: 30, y: 31}
+        - {x: -26, y: 31}
+        - {x: -30, y: 22}
+        - {x: -30, y: -31}
+        - {x: -8, y: -31}
+        - {x: 4, y: -31}
+        - {x: 25, y: -31}
+      physicsShape:
+      - - {x: 29, y: 9}
+        - {x: 18, y: 31}
+        - {x: -19, y: 31}
+        - {x: -30, y: 24}
+        - {x: -30, y: -27}
+        - {x: -25, y: -31}
+        - {x: -9, y: -31}
+        - {x: 30, y: -29}
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4551729bb451e84e825555ec481a4d1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bodyparts_8
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 389
+        width: 58
+        height: 59
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 28, y: 29.5}
+        - {x: 7, y: 29.5}
+        - {x: 0, y: 22.5}
+        - {x: -28, y: -9.5}
+        - {x: -29, y: -12.5}
+        - {x: -29, y: -29.5}
+        - {x: -15, y: -29.5}
+        - {x: 29, y: 13.5}
+        - {x: 29, y: 28.5}
+      physicsShape:
+      - - {x: 4, y: 29.5}
+        - {x: -2, y: 27.5}
+        - {x: -29, y: -8.5}
+        - {x: -29, y: -29.5}
+        - {x: -19, y: -29.5}
+        - {x: 28, y: -0.5}
+        - {x: 29, y: 2.5}
+        - {x: 29, y: 29.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3421d2c9bf72b24080307ef79deef0b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bodyparts_9
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 328
+        width: 48
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -16, y: 25}
+        - {x: -24, y: 22}
+        - {x: -24, y: -25}
+        - {x: 16, y: -25}
+        - {x: 24, y: -9}
+        - {x: 24, y: 25}
+      physicsShape:
+      - - {x: -11, y: 25}
+        - {x: -24, y: 16}
+        - {x: -24, y: -25}
+        - {x: 16, y: -25}
+        - {x: 24, y: 2}
+        - {x: 24, y: 25}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4875dacf1e2ce3748b079dd31081be81
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bodyparts_10
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 267
+        width: 61
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -16.5, y: 20}
+        - {x: -28.5, y: 17}
+        - {x: -30.5, y: 9}
+        - {x: -30.5, y: -20}
+        - {x: 14.5, y: -20}
+        - {x: 30.5, y: -9}
+        - {x: 30.5, y: 14}
+        - {x: 25.5, y: 20}
+      physicsShape:
+      - - {x: -20.5, y: 19}
+        - {x: -30.5, y: 8}
+        - {x: -30.5, y: -17}
+        - {x: -28.5, y: -20}
+        - {x: 24.5, y: -20}
+        - {x: 30.5, y: -4}
+        - {x: 30.5, y: 7}
+        - {x: 16.5, y: 19}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c84d694ed915e144bc7a063ab46da87
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bodyparts_11
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 199
+        width: 57
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -22.5, y: 23}
+        - {x: -28.5, y: 21}
+        - {x: -28.5, y: -23}
+        - {x: 13.5, y: -23}
+        - {x: 28.5, y: -18}
+        - {x: 28.5, y: 6}
+        - {x: 22.5, y: 23}
+      physicsShape:
+      - - {x: 28.5, y: -13}
+        - {x: 28.5, y: 5}
+        - {x: 16.5, y: 23}
+        - {x: -13.5, y: 23}
+        - {x: -28.5, y: 16}
+        - {x: -28.5, y: -21}
+        - {x: -22.5, y: -23}
+        - {x: -3.5, y: -23}
+        - {x: -2.5, y: -22}
+        - {x: 13.5, y: -21}
+        - {x: 25.5, y: -19}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b3d38e3be23c2b4bb01730d8d13fdcc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bodyparts_12
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 128
+        width: 55
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -22.5, y: 29}
+        - {x: -27.5, y: 9}
+        - {x: -27.5, y: -29}
+        - {x: -9.5, y: -29}
+        - {x: 27.5, y: 15}
+        - {x: 27.5, y: 29}
+      physicsShape:
+      - - {x: -3.5, y: 29}
+        - {x: -27.5, y: 5}
+        - {x: -27.5, y: -29}
+        - {x: -13.5, y: -29}
+        - {x: 27.5, y: 20}
+        - {x: 27.5, y: 29}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d5bae1a97ef07c489c5323a4cbaa53e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bodyparts_13
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 60
+        width: 61
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 30.5, y: 3}
+        - {x: 30.5, y: 32}
+        - {x: -21.5, y: 32}
+        - {x: -30.5, y: 30}
+        - {x: -30.5, y: -32}
+        - {x: -12.5, y: -32}
+        - {x: -10.5, y: -28}
+        - {x: 9.5, y: -17}
+        - {x: 23.5, y: -5}
+      physicsShape:
+      - - {x: 18.5, y: 30}
+        - {x: -5.5, y: 30}
+        - {x: -30.5, y: 12}
+        - {x: -30.5, y: -24}
+        - {x: -28.5, y: -31}
+        - {x: -28.5, y: -32}
+        - {x: 4.5, y: -32}
+        - {x: 30.5, y: -8}
+        - {x: 30.5, y: 26}
+        - {x: 27.5, y: 29}
+      tessellationDetail: 0
+      bones: []
+      spriteID: a03ec7e615145a148a150a1b3fa4d196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bodyparts_14
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 0
+        width: 56
+        height: 53
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -28, y: 26.5}
+        - {x: -28, y: -26.5}
+        - {x: 26, y: -26.5}
+        - {x: 28, y: -25.5}
+        - {x: 28, y: 18.5}
+        - {x: 27, y: 26.5}
+      physicsShape:
+      - - {x: -25, y: 26.5}
+        - {x: -28, y: 20.5}
+        - {x: -28, y: -24.5}
+        - {x: -27, y: -26.5}
+        - {x: 28, y: -26.5}
+        - {x: 28, y: 16.5}
+        - {x: 16, y: 26.5}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f27ec64a854efa43ab8af352def00d6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: e3ad4e86df33cca41b7ed7f16a5b365b
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
