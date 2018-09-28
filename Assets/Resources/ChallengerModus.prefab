@@ -21,7 +21,8 @@ GameObject:
   - component: {fileID: 4138369072203684}
   - component: {fileID: 212487020654207486}
   - component: {fileID: 95725269812116476}
-  m_Layer: 0
+  - component: {fileID: 58064784892578094}
+  m_Layer: 11
   m_Name: ChallengerModus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +38,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4143147008631634}
   - component: {fileID: 114764353408195872}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ChallengerModus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,6 +72,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &58064784892578094
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1417612902657568}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1
 --- !u!95 &95725269812116476
 Animator:
   serializedVersion: 3
@@ -100,7 +116,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e98e65d5258913459ccbd3759232399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitTime: 0
+  waitTime: 3
+  col: {fileID: 58064784892578094}
+  render: {fileID: 212487020654207486}
 --- !u!212 &212487020654207486
 SpriteRenderer:
   m_ObjectHideFlags: 1
