@@ -83,7 +83,15 @@ TextureImporter:
   spriteSheet:
     serializedVersion: 2
     sprites: []
-    outline: []
+    outline:
+    - - {x: 74, y: 126}
+      - {x: 2, y: 98}
+      - {x: -43, y: 67}
+      - {x: -92, y: 9}
+      - {x: -120, y: -59}
+      - {x: -128, y: -128}
+      - {x: 128, y: -128}
+      - {x: 128, y: 128}
     physicsShape:
     - - {x: -85, y: 21}
       - {x: -120, y: -52}
