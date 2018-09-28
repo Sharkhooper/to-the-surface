@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trackingPoint: {fileID: 1885835505066708}
-  col: {fileID: 61539110044657252}
+  col: {fileID: 0}
   tilemap: {fileID: 0}
   orientation: 0
   facing: 1
