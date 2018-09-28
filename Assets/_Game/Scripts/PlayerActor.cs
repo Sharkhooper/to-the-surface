@@ -275,6 +275,8 @@ public class PlayerActor : MonoBehaviour {
 			} else {
 				movementRoutine = null;
 			}
+		} else {
+			animator.Play("HeadShake");
 		}
 	}
 
@@ -345,6 +347,8 @@ public class PlayerActor : MonoBehaviour {
 				default:
 					throw new ArgumentOutOfRangeException();
 			}
+		} else {
+			animator.Play("HeadShake");
 		}
 	}
 
