@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 
-public class PlayerActor : MonoBehaviour {
+public class PlayerActor : MonoBehaviour, IResetable {
 	private const int MAX_STEPS = 128;
 
 	private const float CONCAVE_RADIUS = 0.5f;
@@ -395,7 +396,15 @@ public class PlayerActor : MonoBehaviour {
 		UpdateOrientation();
 	}
 
-	public void Die() {
+	private static void Die() {
+		// TODO: This call is really inefficient
+		IResetable[] resetables = FindObjectsOfType<MonoBehaviour>().OfType<IResetable>().ToArray();
+		foreach (IResetable r in resetables) {
+			r.ResetToLevelBegin();
+		}
+	}
+
+	public void ResetToLevelBegin() {
 		if (movementRoutine != null) {
 			StopCoroutine(movementRoutine);
 			movementRoutine = null;
@@ -408,7 +417,6 @@ public class PlayerActor : MonoBehaviour {
 		animator.Play("Idle");
 
 		transform.position = startingPosition;
-
 		orientation = startingOrientation;
 
 		UpdateOrientation();

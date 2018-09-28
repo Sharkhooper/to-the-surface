@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
-public class TimedToggle : MonoBehaviour {
+public class TimedToggle : MonoBehaviour, IResetable {
 	[System.Serializable]
 	private class BoolEvent : UnityEvent<bool> { }
 
@@ -19,7 +17,7 @@ public class TimedToggle : MonoBehaviour {
 	private bool state;
 
 	private void Start() {
-		state = isActive;
+		ResetToLevelBegin();
 	}
 
 	private void Update() {
@@ -36,5 +34,10 @@ public class TimedToggle : MonoBehaviour {
 		}
 
 		time += Time.deltaTime;
+	}
+
+	public void ResetToLevelBegin() {
+		state = isActive;
+		onStateChange.Invoke(isActive);
 	}
 }

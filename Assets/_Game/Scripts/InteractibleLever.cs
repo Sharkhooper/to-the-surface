@@ -2,8 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class InteractibleLever : MonoBehaviour, IInteractible {
-
+public class InteractibleLever : MonoBehaviour, IInteractible, IResetable {
 	[System.Serializable]
 	private class BoolEvent : UnityEvent<bool> { }
 
@@ -20,8 +19,7 @@ public class InteractibleLever : MonoBehaviour, IInteractible {
 	private bool state;
 
 	private void Awake() {
-		state = isActive;
-		UpdateSprite();
+		ResetToLevelBegin();
 	}
 
 	public void Interact(PlayerActor source) {
@@ -32,8 +30,14 @@ public class InteractibleLever : MonoBehaviour, IInteractible {
 			UpdateSprite();
 		}
 	}
-	
+
 	private void UpdateSprite() {
 		render.sprite = state ? active : inactive;
+	}
+
+	public void ResetToLevelBegin() {
+		state = isActive;
+		UpdateSprite();
+		onInteract.Invoke(isActive);
 	}
 }
