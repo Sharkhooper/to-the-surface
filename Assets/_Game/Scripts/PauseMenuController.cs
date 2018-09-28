@@ -1,33 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Networking;
+﻿using UnityEngine;
 
-public class PauseMenuController : MonoBehaviour
-{
-	private GameManager gm;
-
-	private void Start()
-	{
-		gm = GameManager.Instance;
+public class PauseMenuController : MonoBehaviour {
+	public void GoMainMenu() {
+		GameManager.Instance.GoMainMenu();
 	}
 
-	public void GoMainMenu()
-	{
-		gm.GoMainMenu();
+	public void ContinueLevel() {
+		GameManager.Instance.ContinueLevel();
 	}
 
-	public void ContinueLevel()
-	{
-		gm.ContinueLevel();
-		
+	public void ResetLevel() {
+		GameManager.Instance.ResetLevel();
 	}
-
-	public void ResetLevel()
-	{
-		gm.ResetLevel();
-	}
-
-
-
 }

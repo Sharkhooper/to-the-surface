@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 
 public class PlayerActor : MonoBehaviour {
@@ -22,8 +23,6 @@ public class PlayerActor : MonoBehaviour {
 
 	private Orientation startingOrientation;
 
-	public IInteractible Interactible { get; set; }
-
 	public Orientation Orientation => orientation;
 
 	private enum MovementDirection {
@@ -32,6 +31,8 @@ public class PlayerActor : MonoBehaviour {
 	}
 
 	[SerializeField] private GameObject trackingPoint;
+
+	[SerializeField] private Collider2D col;
 
 	[SerializeField] private Tilemap tilemap;
 
@@ -45,12 +46,14 @@ public class PlayerActor : MonoBehaviour {
 
 	[SerializeField] private float peekingDistance;
 
+	private readonly Collider2D[] contactBuffer = new Collider2D[64];
+
 	private void Start() {
 		Cinemachine.CinemachineVirtualCamera cam = Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>();
 
 		startingPosition = transform.position;
 		startingOrientation = orientation;
-		
+
 		if (cam != null) {
 			cam.Follow = trackingPoint.transform;
 		}
@@ -58,12 +61,24 @@ public class PlayerActor : MonoBehaviour {
 
 	private void Update() {
 		animator.SetBool("isRunning", movementRoutine != null);
+		if (inputProvider.PeekingPressed && movementRoutine == null) {
+			trackingPoint.transform.localPosition = Vector3.up * peekingDistance;
+			animator.SetBool("isPeeking", true);
+		} else {
+			trackingPoint.transform.localPosition = Vector3.zero;
+			animator.SetBool("isPeeking", false);
+		}
+
 		if (movementRoutine != null) return;
 
 		transform.position = tilemap.GetCellCenterWorld(tilemap.WorldToCell(transform.position));
 
-		if (inputProvider.InteractionPressed && Interactible != null) {
-			Interactible.Interact();
+		if (inputProvider.InteractionPressed) {
+			int numResults = col.GetContacts(contactBuffer);
+
+			for (int i = 0; i < numResults; ++i) {
+				ExecuteEvents.ExecuteHierarchy<IInteractible>(contactBuffer[i].gameObject, null, (x, y) => x.Interact(this));
+			}
 		}
 
 		IEnumerator movement = GetMovementOperation();
@@ -72,12 +87,12 @@ public class PlayerActor : MonoBehaviour {
 		} else {
 			movementRoutine = null;
 		}
+	}
 
-		animator.SetBool("isPeeking", inputProvider.PeekingPressed);
-		if (inputProvider.PeekingPressed) {
-			trackingPoint.transform.localPosition = Vector3.up * peekingDistance;
-		} else {
-			trackingPoint.transform.localPosition = Vector3.zero;
+	private void OnTriggerEnter2D(Collider2D other) {
+		// Collides with Hazard
+		if (other.gameObject.layer == 11) {
+			Die();
 		}
 	}
 
@@ -203,7 +218,6 @@ public class PlayerActor : MonoBehaviour {
 								break;
 
 							case OnWalkOverAction.MoveConvex:
-								// TODO: Add animation
 								cellPos += directionVec * 2 + downVec;
 								o = o.GetLeft();
 								route.Add(Rotate(directionOrientation, directionOrientation.GetLeft(), o, CONVEX_RADIUS, CONVEX_ANIMATION_TIME));
@@ -254,12 +268,13 @@ public class PlayerActor : MonoBehaviour {
 			foreach (IEnumerator a in route) {
 				yield return a;
 			}
-		    IEnumerator movement = GetMovementOperation();
-		    if (movement != null) {
-			    movementRoutine = StartCoroutine(movement);
-		    } else {
-			    movementRoutine = null;
-		    }
+
+			IEnumerator movement = GetMovementOperation();
+			if (movement != null) {
+				movementRoutine = StartCoroutine(movement);
+			} else {
+				movementRoutine = null;
+			}
 		}
 	}
 
@@ -376,13 +391,22 @@ public class PlayerActor : MonoBehaviour {
 		UpdateOrientation();
 	}
 
-	public void Die()
-	{
+	public void Die() {
+		if (movementRoutine != null) {
+			StopCoroutine(movementRoutine);
+			movementRoutine = null;
+		}
+
+		animator.SetBool("isFalling", false);
+		animator.SetBool("isRunning", false);
+		animator.SetBool("isPeeking", false);
+		animator.SetBool("shouldSlide", false);
+		animator.Play("Idle");
+
 		transform.position = startingPosition;
 
 		orientation = startingOrientation;
-		
+
 		UpdateOrientation();
 	}
-
 }

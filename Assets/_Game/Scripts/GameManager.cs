@@ -1,153 +1,137 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Soraphis;
-using UnityEditor;
+﻿using Soraphis;
 using UnityEngine;
-using UnityEngine.Experimental.PlayerLoop;
 using UnityEngine.SceneManagement;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
-
-
-
-
-public class GameManager : SingletonBehaviour<GameManager>
-{
-	
+public class GameManager : SingletonBehaviour<GameManager> {
 	private int currentLevel = 1; //Current level number, expressed in game as "Day 1".
 	public int HighestLevel { get; private set; }
-	public int LastLevel{ get; private set; }	//Die Anzahl aller existierenden Level (Maximale Anzahl Level im Spiel)
+	public int LastLevel { get; private set; } //Die Anzahl aller existierenden Level (Maximale Anzahl Level im Spiel)
 
 
-	private GameObject PauseMenu =null ;		//Damit wird das PauseMenu gespeichert
-	public bool inLevel { get; set; }
-	
-	
-	
+	private GameObject PauseMenu;
 
-	private LoadSave ls = new LoadSave();
-	
+	public bool IsInLevel { get; set; }
 
-	//Awake is always called before any Start functions
+	public bool IsChallengerModeEnabled { get; set; }
 
-	private void Awake()
-	{
-		inLevel = false;
+	private void Awake() {
+		IsChallengerModeEnabled = false;
+		IsInLevel = false;
 		HighestLevel = 1;
-		
-		LastLevel = SceneManager.sceneCountInBuildSettings-1;
 
+		LastLevel = SceneManager.sceneCountInBuildSettings - 1;
 
-		if (ls.DoesSaveFileExist())
-		{
-			int tmp = 1;
-
-			ls.Load(out currentLevel, out tmp);
+		if (LoadSave.DoesSaveFileExist) {
+			LoadSave.Load(out currentLevel, out int tmp);
 			HighestLevel = tmp;
-
 		}
-
 	}
 
-	
 
 	//	Update nicht benötigt da alle veränderungen über Methodenaufrufe laufen
-	
-	public void LoadLevel(int lvl)			//lädt das ausgewählte lvl abhängig seiner Nummer
-	{
 
+	//lädt das ausgewählte lvl abhängig seiner Nummer
+	public void LoadLevel(int lvl) {
 		currentLevel = lvl;
 		string load;
-		if (lvl < 10)
+		if (lvl < 10) {
 			load = "Level0" + lvl;
-		else
-		{
+		} else {
 			load = "Level" + lvl;
 		}
 
-		inLevel = true;
-		SceneManager.LoadScene(load,LoadSceneMode.Single);
-		
+		IsInLevel = true;
+		SceneManager.LoadScene(load, LoadSceneMode.Single);
+
 		Time.timeScale = 1.0f;
 	}
 
-	public void ContinueGame() //Continue im Hauptmenu
-	{
+	//Continue im Hauptmenu
+	public void ContinueGame() {
 		LoadLevel(currentLevel);
 	}
-	
-	public void CloseGame()		// beendet das Spiel
-	{
+
+	/// <summary>
+	/// Exits the Application
+	/// </summary>
+	public void CloseGame() {
+#if UNITY_EDITOR
+		EditorApplication.isPlaying = false;
+#endif
 		Application.Quit();
 	}
 
 
-	public void LevelFinished()		// wenn man ein Level beendet hat
+	public void LevelFinished() // wenn man ein Level beendet hat
 	{
-		if(currentLevel<LastLevel)
-		currentLevel++;
+		if (currentLevel < LastLevel) {
+			currentLevel++;
+		}
 
-		if (currentLevel > HighestLevel)
+		if (currentLevel > HighestLevel) {
 			HighestLevel++;
+		}
 
 		int tmp = HighestLevel;
-		ls.Safe(currentLevel,tmp);
-		
+		LoadSave.Save(currentLevel, tmp);
+
 		LoadLevel(currentLevel);
 	}
 
-	public void ResetLevel()		// Neustarte bzw. neu lade das Leven/ die scene
-	{
+	// Neustarte bzw. neu lade das Leven/ die scene
+	public void ResetLevel() {
 		LoadLevel(currentLevel);
 	}
 
-	public void PauseLevel()		// pausiert das lvl indem das Gameobject PauseMenu aktiv wird
-	{
-		if (PauseMenu==null)				// erstellt das PauseMenu wenn es noch keines gibt
-		{
-			PauseMenu=Instantiate(Resources.Load("PauseMenu",typeof(GameObject)))as GameObject;
+	// pausiert das lvl indem das Gameobject PauseMenu aktiv wird
+	public void PauseLevel() {
+		// Lazy Initialize pause menu
+		if (PauseMenu == null) {
+			PauseMenu = Instantiate(Resources.Load("PauseMenu", typeof(GameObject))) as GameObject;
 		}
-		
+
 		Time.timeScale = 0.0f;
 		PauseMenu.SetActive(true);
 	}
 
-	public bool PauseMenuActive()
-	{
-		if (PauseMenu != null)
-		{
+	public bool PauseMenuActive() {
+		if (PauseMenu != null) {
 			return PauseMenu.activeSelf;
 		}
-		else
-		{
+		else {
 			return false;
 		}
 	}
 
-	public void ContinueLevel()		// weiter button im PauseMenu ; Pause Menu wird inaktiv
-	{
+	// weiter button im PauseMenu ; Pause Menu wird inaktiv
+	public void ContinueLevel() {
 		Time.timeScale = 1.0f;
 		PauseMenu.SetActive(false);
 	}
 
-	public void GoMainMenu()		// Das Lvl wird beendet und man geht ins Hauptmenu
-	{
-		Destroy(PauseMenu);			// Da im hauptmenu kein PauseMenu gebraucht wird wird es zerstört und wieder erstellt wenn man ein lvl startet
+	// Das Lvl wird beendet und man geht ins Hauptmenu
+	public void GoMainMenu() {
+		// Da im hauptmenu kein PauseMenu gebraucht wird wird es zerstört und wieder erstellt wenn man ein lvl startet
+		Destroy(PauseMenu);
 		PauseMenu = null;
 
-		inLevel = false;
-		
-		
-		SceneManager.LoadScene("MainMenu",LoadSceneMode.Single);		// aufruf des Mainmenu
+		IsInLevel = false;
+
+		// aufruf des Mainmenu
+		SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
 	}
 
-	public void ResetProgress()		// Man löscht seinen gesamten Fortschritt und hat wieder keine Lvl freigeschaltet
-	{
+	/// <summary>
+	/// Resets Progress so no levels are unlocked
+	/// </summary>
+	public void ResetProgress() {
 		currentLevel = 1;
 		HighestLevel = 1;
 		int highestLevel = HighestLevel;
-		ls.Safe(currentLevel, highestLevel);
+		LoadSave.Save(currentLevel, highestLevel);
 	}
-
 }

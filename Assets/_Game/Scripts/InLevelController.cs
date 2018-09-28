@@ -1,34 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class InLevelController : MonoBehaviour {
-
-	private GameManager gm;
-    
-	private void Awake()
-	{
-		gm = GameManager.Instance;
-		gm.inLevel = true;
+	private void Start() {
+		if (GameManager.Instance.IsChallengerModeEnabled) {
+			Instantiate(Resources.Load<GameObject>("ChallengerModus"));
+		}
 	}
 
-	private void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.Escape))
-		{
-			if (!gm.PauseMenuActive())
-			{
-				gm.PauseLevel();
-			}
-			else
-			{
-				gm.ContinueLevel();
+	private void Update() {
+		if (Input.GetKeyDown(KeyCode.Escape)) {
+			if (!GameManager.Instance.PauseMenuActive()) {
+				GameManager.Instance.PauseLevel();
+			} else {
+				GameManager.Instance.ContinueLevel();
 			}
 		}
 	}
 
-	public void LevelFinished()
-	{
-		gm.LevelFinished();
+	public void LevelFinished() {
+		GameManager.Instance.LevelFinished();
 	}
 }
