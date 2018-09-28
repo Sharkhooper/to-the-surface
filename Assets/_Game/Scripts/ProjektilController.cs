@@ -9,7 +9,7 @@ public class ProjektilController : MonoBehaviour {
 	private void Update() {
 		if (lifetime > MAX_LIFETIME) {
 			Destroy(gameObject);
-		}
+		} 
 
 		lifetime += Time.deltaTime;
 	}

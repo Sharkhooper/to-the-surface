@@ -74,7 +74,7 @@ public class RotatedTile : TileBase {
 		tileData.color = Color.white;
 		tileData.transform = Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0, 0, GetDegrees()), Vector3.one);
 		tileData.flags = TileFlags.LockTransform;
-		tileData.colliderType = Tile.ColliderType.Grid;
+		tileData.colliderType = Tile.ColliderType.Sprite;
 	}
 
 	private float GetDegrees() {

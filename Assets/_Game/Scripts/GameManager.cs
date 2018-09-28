@@ -19,15 +19,16 @@ public class GameManager : SingletonBehaviour<GameManager> {
 	public bool IsChallengerModeEnabled { get; set; }
 
 	private void Awake() {
-		IsChallengerModeEnabled = false;
+		IsChallengerModeEnabled = true;
 		IsInLevel = false;
 		HighestLevel = 1;
 
 		LastLevel = SceneManager.sceneCountInBuildSettings - 1;
 
 		if (LoadSave.DoesSaveFileExist) {
-			LoadSave.Load(out currentLevel, out int tmp);
+			LoadSave.Load(out currentLevel, out int tmp, out bool tmpCh);
 			HighestLevel = tmp;
+			IsChallengerModeEnabled = tmpCh;
 		}
 	}
 
@@ -77,7 +78,8 @@ public class GameManager : SingletonBehaviour<GameManager> {
 		}
 
 		int tmp = HighestLevel;
-		LoadSave.Save(currentLevel, tmp);
+		bool tmpCh = IsChallengerModeEnabled;
+		LoadSave.Save(currentLevel, tmp, tmpCh);
 
 		LoadLevel(currentLevel);
 	}
@@ -132,6 +134,7 @@ public class GameManager : SingletonBehaviour<GameManager> {
 		currentLevel = 1;
 		HighestLevel = 1;
 		int highestLevel = HighestLevel;
-		LoadSave.Save(currentLevel, highestLevel);
+		bool challengerEnabled = IsChallengerModeEnabled;
+		LoadSave.Save(currentLevel, highestLevel, challengerEnabled);
 	}
 }
