@@ -1,55 +1,83 @@
-﻿using UnityEngine;
+﻿using System;
+using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class LevelSelectController : MonoBehaviour {
+	//[SerializeField] private GameObject levelButtonPrefab;
+	[SerializeField] private GameObject pagePrefab;
+	[SerializeField] private int nonPageObjects = 3;
+	private int highestLevel;
+	private int lastLevel;
+	
 	private void Start() {
-		ActivateAllPages();
-		UpdateLevelSelect();
-		DisablePagesAfterFirst();
+		InitalizeLevelSelect();
 	}
 
 	/// <summary>
 	/// Locks all currently not unlocked levels
 	/// </summary>
-	public void UpdateLevelSelect() {
-		int highestLevel = GameManager.Instance.HighestLevel;
-		int lastLevel = GameManager.Instance.LastLevel;
+	public void InitalizeLevelSelect()
+	{
+		highestLevel = GameManager.Instance.HighestLevel;
+		lastLevel = GameManager.Instance.LastLevel;
+		int pagesNeeded = lastLevel / 6 + 1;
+		int buttonsOnLastPage = lastLevel % 6;
+		GameObject currentPage;
 
-		for (int i = 1; i <= 18; i++) {
-			string buttonName = "ButtonLevel" + i;
-			if (GameObject.Find(buttonName) != null) {
-				GameObject button = GameObject.Find(buttonName);
-				Image image = button.transform.Find("Image").GetComponent<Image>();
-				// Level unlocked
-				if (i <= highestLevel) {
-					string loadStr = i < 10 ? "LevelSelect/Level0" + i : "LevelSelect/Level" + i;
-					image.sprite = Resources.Load(loadStr, typeof(Sprite)) as Sprite;
-					button.GetComponent<Button>().interactable = true;
-				}
-				// Level locked
-				else if (i <= lastLevel) {
-					image.sprite = Resources.Load("LevelSelect/lockedTEMP", typeof(Sprite)) as Sprite;
-					button.GetComponent<Button>().interactable = false;
-				}
-				// Level doesn't exist
-				else {
-					button.SetActive(false);
+		for (int i = 1; i <= pagesNeeded; i++)
+		{
+			currentPage = GameObject.Instantiate(pagePrefab, transform.GetChild(0));
+			currentPage.GetComponent<LevelSelectPageController>().PageNr = i;
+			
+			//Load images for buttons
+			for (int j = 1; j <= 6; j++)
+			{
+				String buttonName = "ButtonLevel" + j;
+				int levelNr = j + (currentPage.GetComponent<LevelSelectPageController>().PageNr-1) * 6;
 
-					// Deactivates NextPageButton because there isnt' a next page
-					if (button.transform.parent.Find("ButtonNextPage") != null)
+				if (GameObject.Find(buttonName) != null)
+				{
+					GameObject button = currentPage.transform.Find(buttonName).gameObject;
+					Image image = button.transform.Find("Image").GetComponent<Image>();
+					// Level unlocked
+					if (levelNr <= highestLevel)
 					{
-
-						GameObject nextPage = button.transform.parent.Find("ButtonNextPage").gameObject;
-						
-						nextPage.SetActive(false);
+						string loadStr = levelNr < 10 ? "LevelSelect/Level0" + levelNr : "LevelSelect/Level" + levelNr;
+						image.sprite = Resources.Load(loadStr, typeof(Sprite)) as Sprite;
+						button.transform.Find("Text").gameObject.GetComponent<TextMeshProUGUI>().text = levelNr + "";
+						button.GetComponent<Button>().interactable = true;
 					}
-
-					// Next page can't be opened so buttons on it don't have to be changed
-					if (i % 6 == 0)
-						return;
+					// Level locked
+					else if (levelNr <= lastLevel)
+					{
+						image.sprite = Resources.Load("LevelSelect/lockedTEMP", typeof(Sprite)) as Sprite;
+						button.GetComponent<Button>().interactable = false;
+					}
+				}
+			}
+			
+			// Deactivate not needed NextPage- & PreviousPage-Buttons
+			if (i == 1)
+			{
+				currentPage.transform.Find("ButtonPrevPage").gameObject.SetActive(false);
+			}
+			if (i == pagesNeeded)
+			{
+				currentPage.transform.Find("ButtonNextPage").gameObject.SetActive(false);
+				
+				// Deactivate not needed buttons
+				if (buttonsOnLastPage != 0)
+				{
+					for (int j = 6; j > buttonsOnLastPage; j--)
+					{
+						String buttonName = "ButtonLevel" + j;
+						currentPage.transform.Find(buttonName).gameObject.SetActive(false);
+					}
 				}
 			}
 		}
+		DisablePagesAfterFirst();
 	}
 
 	/// <summary>
@@ -79,9 +107,17 @@ public class LevelSelectController : MonoBehaviour {
 		GameManager.Instance.LoadLevel(level);
 	}
 
-	public void OpenLevelSelect() {
-		ActivateAllPages();
-		UpdateLevelSelect();
-		DisablePagesAfterFirst();
+	public void ShowNextPage(int pageNr)
+	{
+		GameObject canvas = transform.Find("Canvas").gameObject;
+		canvas.transform.GetChild(pageNr + nonPageObjects - 1).gameObject.SetActive(false);
+		canvas.transform.GetChild(pageNr + nonPageObjects).gameObject.SetActive(true);
+	}
+	
+	public void ShowPrevPage(int pageNr)
+	{
+		GameObject canvas = transform.Find("Canvas").gameObject;
+		canvas.transform.GetChild(pageNr + nonPageObjects - 1).gameObject.SetActive(false);
+		canvas.transform.GetChild(pageNr + nonPageObjects - 2).gameObject.SetActive(true);
 	}
 }

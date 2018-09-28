@@ -1040,8 +1040,26 @@ Prefab:
       objectReference: {fileID: 1114752654}
     - target: {fileID: 1112563719743610, guid: 4bbfb22c52b83fb408f6cccb5da7c286, type: 2}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1867206183319644, guid: 4bbfb22c52b83fb408f6cccb5da7c286, type: 2}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1566005370909688, guid: 4bbfb22c52b83fb408f6cccb5da7c286, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1238292703456030, guid: 4bbfb22c52b83fb408f6cccb5da7c286, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114980597269810140, guid: 4bbfb22c52b83fb408f6cccb5da7c286,
+        type: 2}
+      propertyPath: pagePrefab
+      value: 
+      objectReference: {fileID: 1953451430673868, guid: 9e17a0d4a71e81e459bf89deb0ba7bef,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bbfb22c52b83fb408f6cccb5da7c286, type: 2}
   m_IsPrefabAsset: 0
@@ -1576,7 +1594,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1284376702
 MonoBehaviour:
   m_ObjectHideFlags: 0
