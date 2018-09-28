@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 
 public class PlayerActor : MonoBehaviour {
@@ -22,8 +23,6 @@ public class PlayerActor : MonoBehaviour {
 
 	private Orientation startingOrientation;
 
-	public IInteractible Interactible { get; set; }
-
 	public Orientation Orientation => orientation;
 
 	private enum MovementDirection {
@@ -32,6 +31,8 @@ public class PlayerActor : MonoBehaviour {
 	}
 
 	[SerializeField] private GameObject trackingPoint;
+
+	[SerializeField] private Collider2D col;
 
 	[SerializeField] private Tilemap tilemap;
 
@@ -44,6 +45,8 @@ public class PlayerActor : MonoBehaviour {
 	[SerializeField] private Animator animator;
 
 	[SerializeField] private float peekingDistance;
+
+	private readonly Collider2D[] contactBuffer = new Collider2D[64];
 
 	private void Start() {
 		Cinemachine.CinemachineVirtualCamera cam = Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>();
@@ -70,8 +73,12 @@ public class PlayerActor : MonoBehaviour {
 
 		transform.position = tilemap.GetCellCenterWorld(tilemap.WorldToCell(transform.position));
 
-		if (inputProvider.InteractionPressed && Interactible != null) {
-			Interactible.Interact();
+		if (inputProvider.InteractionPressed) {
+			int numResults = col.GetContacts(contactBuffer);
+
+			for (int i = 0; i < numResults; ++i) {
+				ExecuteEvents.ExecuteHierarchy<IInteractible>(contactBuffer[i].gameObject, null, (x, y) => x.Interact(this));
+			}
 		}
 
 		IEnumerator movement = GetMovementOperation();
