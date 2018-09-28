@@ -3,33 +3,21 @@
 public class CannonController : MonoBehaviour, IResetable {
 	[SerializeField] private GameObject cannonBarrel;
 	[SerializeField] private GameObject fire;
-	[SerializeField] private float shotsPerSeconds;
+	[SerializeField] private float fireDelay;
 	[SerializeField] private float speed = 10f;
 	[SerializeField] private Animator anim;
 	[SerializeField] private Animator animRadVorne;
 	[SerializeField] private Animator animRadHinten;
-    [SerializeField] private float startAfterTime;
 
-    private float cooldown;
-
-    void Awake()
-    {
-        cooldown = startAfterTime;
-    }
-
-	private void FixedUpdate () {
-		if (cooldown <= 0) {
-			anim.SetTrigger("Fire");
-			animRadVorne.SetTrigger("Fire");
-			animRadHinten.SetTrigger("Fire");
-		} else {
-			cooldown = Mathf.Max(0, cooldown - Time.deltaTime);
-		}
+	private void Start()
+	{
+		InvokeRepeating("FireCannon", 0.0f, fireDelay);
 	}
-
-	public void Fire() {
+	
+	public void FireCannon() {
+		anim.SetTrigger("Fire");
+		
 		GameObject obj = Instantiate(fire, cannonBarrel.transform.Find("FirePoint").position, cannonBarrel.transform.rotation);
-		cooldown = 1f / (shotsPerSeconds);
 		// Drehung
 		obj.transform.rotation = Quaternion.Euler(0, 0, 90) * cannonBarrel.transform.rotation;
 		obj.transform.localScale = transform.lossyScale;
@@ -38,6 +26,6 @@ public class CannonController : MonoBehaviour, IResetable {
 	}
 
 	public void ResetToLevelBegin() {
-		cooldown = startAfterTime;
+		
 	}
 }

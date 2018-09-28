@@ -46,6 +46,10 @@ public class PlayerActor : MonoBehaviour, IResetable {
 
 	[SerializeField] private Animator animator;
 
+	[SerializeField] private ParticleSystem deathEffect;
+
+	[SerializeField] private SpriteRenderer sprite;
+
 	[SerializeField] private float peekingDistance;
 
 	private readonly Collider2D[] contactBuffer = new Collider2D[64];
@@ -94,7 +98,7 @@ public class PlayerActor : MonoBehaviour, IResetable {
 	private void OnTriggerEnter2D(Collider2D other) {
 		// Collides with Hazard
 		if (other.gameObject.layer == 11) {
-			Die();
+			StartCoroutine(Die());
 		}
 	}
 
@@ -398,7 +402,13 @@ public class PlayerActor : MonoBehaviour, IResetable {
 		UpdateOrientation();
 	}
 
-	private static void Die() {
+	private IEnumerator Die() {
+		deathEffect.Play(true);
+		col.enabled = false;
+		sprite.enabled = false;
+
+		yield return new WaitForSeconds(0.1f);
+
 		// TODO: This call is really inefficient
 		IResetable[] resetables = FindObjectsOfType<MonoBehaviour>().OfType<IResetable>().ToArray();
 		foreach (IResetable r in resetables) {
@@ -412,14 +422,17 @@ public class PlayerActor : MonoBehaviour, IResetable {
 			movementRoutine = null;
 		}
 
+		transform.position = startingPosition;
+		orientation = startingOrientation;
+
+		sprite.enabled = true;
+		col.enabled = true;
+
 		animator.SetBool("isFalling", false);
 		animator.SetBool("isRunning", false);
 		animator.SetBool("isPeeking", false);
 		animator.SetBool("shouldSlide", false);
 		animator.Play("Idle");
-
-		transform.position = startingPosition;
-		orientation = startingOrientation;
 
 		UpdateOrientation();
 	}
