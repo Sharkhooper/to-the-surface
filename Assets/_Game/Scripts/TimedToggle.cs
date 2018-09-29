@@ -39,6 +39,5 @@ public class TimedToggle : MonoBehaviour, IResetable {
 	public void ResetToLevelBegin() {
 		state = isActive;
 		time = 0;
-		onStateChange.Invoke(isActive);
 	}
 }
