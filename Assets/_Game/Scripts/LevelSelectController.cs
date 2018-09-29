@@ -18,7 +18,7 @@ public class LevelSelectController : MonoBehaviour {
 	{
 		int highestLevel = GameManager.Instance.HighestLevel;
 		int lastLevel = GameManager.Instance.LastLevel;
-		int pagesNeeded = lastLevel / 6 + 1;
+		int pagesNeeded = lastLevel % 6 == 0? lastLevel/6 : lastLevel/6 + 1;
 		int buttonsOnLastPage = lastLevel % 6;
 		GameObject currentPage;
 
