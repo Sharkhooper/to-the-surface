@@ -325,6 +325,7 @@ MonoBehaviour:
   animator: {fileID: 95392249558912674}
   deathEffect: {fileID: 198871341561184788}
   sprite: {fileID: 212359673814677190}
+  headlight: {fileID: 1331226396172540}
   peekingDistance: 7
 --- !u!198 &198578123707514436
 ParticleSystem:
