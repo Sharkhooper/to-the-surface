@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e98e65d5258913459ccbd3759232399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitTime: 2
+  waitTime: 2.5
   child: {fileID: 1417612902657568}
 --- !u!198 &198244601809831776
 ParticleSystem:
