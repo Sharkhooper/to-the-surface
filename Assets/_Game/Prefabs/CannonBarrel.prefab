@@ -103,10 +103,12 @@ MonoBehaviour:
   cannonBarrel: {fileID: 1682295116660206}
   fire: {fileID: 1087194835788670, guid: 3fd0675fac3d4794aafbb72c8557c635, type: 2}
   fireDelay: 1
+  phase: 0
   speed: 7
   anim: {fileID: 95962382210488100}
   animRadVorne: {fileID: 0}
   animRadHinten: {fileID: 0}
+  ignoreEnviroment: 1
 --- !u!212 &212468767237705114
 SpriteRenderer:
   m_ObjectHideFlags: 1

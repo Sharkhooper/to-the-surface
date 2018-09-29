@@ -9,6 +9,7 @@ public class CannonController : MonoBehaviour, IResetable {
 	[SerializeField] private Animator anim;
 	[SerializeField] private Animator animRadVorne;
 	[SerializeField] private Animator animRadHinten;
+	[SerializeField] private bool ignoreEnviroment;
 
 	private Coroutine co;
 
@@ -36,6 +37,7 @@ public class CannonController : MonoBehaviour, IResetable {
 		obj.transform.localScale = transform.lossyScale;
 		// Flugrichtung
 		obj.GetComponent<Rigidbody2D>().velocity = cannonBarrel.transform.right * speed;
+		obj.GetComponent<ProjektilController>().ignoreEnviroment = ignoreEnviroment;
 	}
 
 	public void ResetToLevelBegin() {
