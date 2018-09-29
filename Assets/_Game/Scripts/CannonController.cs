@@ -4,7 +4,8 @@ public class CannonController : MonoBehaviour, IResetable {
 	[SerializeField] private GameObject cannonBarrel;
 	[SerializeField] private GameObject fire;
 	[SerializeField] private float fireDelay;
-	[SerializeField] private float speed = 10f;
+    [SerializeField] private float phase;
+    [SerializeField] private float speed = 10f;
 	[SerializeField] private Animator anim;
 	[SerializeField] private Animator animRadVorne;
 	[SerializeField] private Animator animRadHinten;
@@ -38,6 +39,6 @@ public class CannonController : MonoBehaviour, IResetable {
 	}
 
 	public void ResetToLevelBegin() {
-		time = fireDelay;
+		time = phase;
 	}
 }
