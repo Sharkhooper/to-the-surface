@@ -40,6 +40,5 @@ public class InteractibleLever : MonoBehaviour, IInteractible, IResetable {
 	public void ResetToLevelBegin() {
 		state = isActive;
 		UpdateSprite();
-
 	}
 }
