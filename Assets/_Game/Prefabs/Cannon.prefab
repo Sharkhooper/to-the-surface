@@ -75,7 +75,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1797984525371050
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,7 +92,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4060432582790156
 Transform:
   m_ObjectHideFlags: 1
@@ -114,7 +114,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1320188170728490}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.559809, y: 7.586144, z: 0}
+  m_LocalPosition: {x: 12.65, y: 5.55, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 4515523674784162}
@@ -229,12 +229,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cannonBarrel: {fileID: 1263581091867116}
   fire: {fileID: 1087194835788670, guid: 3fd0675fac3d4794aafbb72c8557c635, type: 2}
-  shotsPerSeconds: 0.5
+  fireDelay: 1
   speed: 7
   anim: {fileID: 95144805117775786}
   animRadVorne: {fileID: 95645392377643954}
   animRadHinten: {fileID: 95763621902185322}
-  startAfterTime: 0
 --- !u!212 &212085445371616958
 SpriteRenderer:
   m_ObjectHideFlags: 1

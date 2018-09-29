@@ -9,12 +9,24 @@ public class CannonController : MonoBehaviour, IResetable {
 	[SerializeField] private Animator animRadVorne;
 	[SerializeField] private Animator animRadHinten;
 
-	private void Start()
-	{
-		InvokeRepeating("FireCannon", 0.0f, fireDelay);
+	private Coroutine co;
+
+	private float time;
+
+	private void Start() {
+		ResetToLevelBegin();
 	}
-	
-	public void FireCannon() {
+
+	private void FixedUpdate() {
+		if (time >= fireDelay) {
+			time -= fireDelay;
+			Fire();
+		}
+
+		time += Time.deltaTime;
+	}
+
+	private void Fire() {
 		anim.SetTrigger("Fire");
 		
 		GameObject obj = Instantiate(fire, cannonBarrel.transform.Find("FirePoint").position, cannonBarrel.transform.rotation);
@@ -26,6 +38,6 @@ public class CannonController : MonoBehaviour, IResetable {
 	}
 
 	public void ResetToLevelBegin() {
-		
+		time = fireDelay;
 	}
 }
