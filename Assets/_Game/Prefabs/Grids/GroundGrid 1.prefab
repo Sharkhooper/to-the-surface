@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 8195094282210412246}
   - component: {fileID: 3664157343144511050}
   - component: {fileID: 2113883507229240754}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4720128643836508}
   - component: {fileID: 2569400266694051648}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: GroundGrid 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,7 +129,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1400540287
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
