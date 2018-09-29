@@ -7,7 +7,7 @@ public class ChallengerController : MonoBehaviour, IResetable {
 
 	private readonly Queue<Location> queue = new Queue<Location>();
 
-	[SerializeField] private GameObject child;
+	[SerializeField] private List<GameObject> children;
 
 	private int objectsInQueueBuffer;
 
@@ -32,7 +32,9 @@ public class ChallengerController : MonoBehaviour, IResetable {
 			rotation = player.transform.rotation
 		});
 
-		child.SetActive(IsActive);
+		foreach (GameObject child in children) {
+			child.SetActive(IsActive);
+		}
 
 		if (IsActive) {
 			Location l = queue.Dequeue();
@@ -44,6 +46,8 @@ public class ChallengerController : MonoBehaviour, IResetable {
 
 	public void ResetToLevelBegin() {
 		queue.Clear();
-		child.SetActive(false);
+		foreach (GameObject child in children) {
+			child.SetActive(false);
+		}
 	}
 }
