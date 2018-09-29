@@ -230,6 +230,7 @@ MonoBehaviour:
   cannonBarrel: {fileID: 1263581091867116}
   fire: {fileID: 1087194835788670, guid: 3fd0675fac3d4794aafbb72c8557c635, type: 2}
   fireDelay: 1
+  phase: 0
   speed: 7
   anim: {fileID: 95144805117775786}
   animRadVorne: {fileID: 95645392377643954}
