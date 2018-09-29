@@ -97,7 +97,7 @@ public class PlayerActor : MonoBehaviour, IResetable {
 
 	private void OnTriggerEnter2D(Collider2D other) {
 		// Collides with Hazard
-		if (other.gameObject.layer == 11) {
+		if (other.gameObject.layer == 11 || other.gameObject.layer == 13) {
 			StartCoroutine(Die());
 		}
 	}

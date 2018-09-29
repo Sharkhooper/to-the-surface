@@ -11,8 +11,6 @@ public class CannonController : MonoBehaviour, IResetable {
 	[SerializeField] private Animator animRadHinten;
 	[SerializeField] private bool ignoreEnviroment;
 
-	private Coroutine co;
-
 	private float time;
 
 	private void Start() {

@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 58064784892578094}
   - component: {fileID: 199745163004192738}
   - component: {fileID: 198244601809831776}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: ChallengerModus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4143147008631634}
   - component: {fileID: 114764353408195872}
-  m_Layer: 11
+  m_Layer: 13
   m_Name: ChallengerModus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 23947111915981346}
   - component: {fileID: 114417361206357324}
   - component: {fileID: 114644862311527322}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: LightSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,7 +161,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 0.4
 --- !u!114 &114417361206357324
 MonoBehaviour:
   m_ObjectHideFlags: 1
