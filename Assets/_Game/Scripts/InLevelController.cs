@@ -25,9 +25,7 @@ public class InLevelController : MonoBehaviour {
 	private IEnumerator LevelEndRoutine() {
 		PlayerActor player = FindObjectOfType<PlayerActor>();
 		Animator anim = player.GetComponent<Animator>();
-		anim.Play("LevelEnd");
-		player.GetComponent<Collider2D>().enabled = false;
-		player.enabled = false;
+		player.LevelEnd();
 
 		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
 

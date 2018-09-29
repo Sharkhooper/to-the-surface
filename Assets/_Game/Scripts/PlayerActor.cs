@@ -50,6 +50,8 @@ public class PlayerActor : MonoBehaviour, IResetable {
 
 	[SerializeField] private SpriteRenderer sprite;
 
+	[SerializeField] private GameObject headlight;
+
 	[SerializeField] private float peekingDistance;
 
 	private readonly Collider2D[] contactBuffer = new Collider2D[64];
@@ -406,6 +408,7 @@ public class PlayerActor : MonoBehaviour, IResetable {
 		deathEffect.Play(true);
 		col.enabled = false;
 		sprite.enabled = false;
+		headlight.SetActive(false);
 
 		yield return new WaitForSeconds(0.1f);
 
@@ -414,6 +417,13 @@ public class PlayerActor : MonoBehaviour, IResetable {
 		foreach (IResetable r in resetables) {
 			r.ResetToLevelBegin();
 		}
+	}
+
+	public void LevelEnd() {
+		animator.Play("LevelEnd");
+		enabled = false;
+		col.enabled = false;
+		headlight.SetActive(false);
 	}
 
 	public void ResetToLevelBegin() {
@@ -427,6 +437,7 @@ public class PlayerActor : MonoBehaviour, IResetable {
 
 		sprite.enabled = true;
 		col.enabled = true;
+		headlight.SetActive(true);
 
 		animator.SetBool("isFalling", false);
 		animator.SetBool("isRunning", false);
