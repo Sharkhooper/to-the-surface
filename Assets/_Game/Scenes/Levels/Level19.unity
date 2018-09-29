@@ -7856,7 +7856,7 @@ Prefab:
     - target: {fileID: 114364974979223006, guid: ac8335930a4ce4f42bdd925048408184,
         type: 2}
       propertyPath: fireDelay
-      value: 2
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 114364974979223006, guid: ac8335930a4ce4f42bdd925048408184,
         type: 2}
