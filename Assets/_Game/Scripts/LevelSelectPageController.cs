@@ -8,7 +8,6 @@ public class LevelSelectPageController : MonoBehaviour {
 	public void LoadLevel(int level)
 	{
 		level += (PageNr-1) * 6;
-		Debug.Log("Load level " + level);
 		GameManager.Instance.LoadLevel(level);
 	}
 
