@@ -730,9 +730,9 @@ PlayerSettings:
     UNet: 1
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 3
-  cloudProjectId: 46a9d52a-d45f-443f-a1cb-1cca2afec4db
-  projectName: Unity-Base-Project-2018.2
-  organizationId: jan-meissner
+  cloudProjectId: 
+  projectName: 
+  organizationId: 
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
