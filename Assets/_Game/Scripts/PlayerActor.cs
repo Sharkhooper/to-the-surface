@@ -419,6 +419,11 @@ public class PlayerActor : MonoBehaviour, IResetable {
 		}
 	}
 
+	public void OnGUI() {
+		GUI.color = Color.red;
+		GUI.Label(new Rect(10, 10, 100, 30), inputProvider.MoveDirection.ToString());
+	}
+	
 	public void LevelEnd() {
 		animator.Play("LevelEnd");
 		enabled = false;
